@@ -2,8 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="portrait"
-    android:layout_width="match_parent"
+     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="github.com.anurag145.campusbox.HOME">
 
@@ -23,6 +22,24 @@
 
         <include layout="@layout/welcome_button"
                         />
+    </RelativeLayout>
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="352dp">
+        <include layout="@layout/login_sequence">
+
+        </include>
+        <TextView
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="By continuing,you agree to our Terms and Privacy Policy"
+            />
     </RelativeLayout>
 
 </RelativeLayout>

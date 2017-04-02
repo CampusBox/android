@@ -11,32 +11,40 @@
         >
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl1"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
+
             <TextView
+                android:id="@+id/t1"
                 style="@style/homeButton"
                 android:text="Articles" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
-
+            android:id="@+id/rl2"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
-            <TextView
-                style="@style/homeButton"
 
+            <TextView
+                android:id="@+id/t2"
+
+                style="@style/homeButton"
                 android:text="Poetry" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl3"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
+
             <TextView
+                android:id="@+id/t3"
                 style="@style/homeButton"
                 android:text="Drama" />
         </android.support.v7.widget.CardView>
@@ -51,32 +59,40 @@
         >
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl4"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
+
             <TextView
+                android:id="@+id/t4"
                 style="@style/homeButton"
                 android:text="Paint and Colour" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
-
+            android:id="@+id/rl5"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
-            <TextView
-                style="@style/homeButton"
 
+            <TextView
+                android:id="@+id/t5"
+
+                style="@style/homeButton"
                 android:text="Drawing" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl6"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
+
             <TextView
+                android:id="@+id/t6"
                 style="@style/homeButton"
                 android:text="Sewing and Fabric" />
         </android.support.v7.widget.CardView>
@@ -91,42 +107,53 @@
         >
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl7"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
+
             <TextView
+                android:id="@+id/t7"
                 style="@style/homeButton"
                 android:text="Craft" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl8"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             android:layout_marginLeft="8dp"
              >
+
             <TextView
+                android:id="@+id/t8"
                 style="@style/homeButton"
                 android:text="Clay" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
-
+            android:id="@+id/rl9"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
-            <TextView
-                style="@style/homeButton"
 
+            <TextView
+                android:id="@+id/t9"
+
+                style="@style/homeButton"
                 android:text="Singing" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl10"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
+
             <TextView
+                android:id="@+id/t10"
                 style="@style/homeButton"
                 android:text="Instrumental" />
         </android.support.v7.widget.CardView>
@@ -143,30 +170,36 @@
             style="@style/homeCardButton"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
-            >
+            android:id="@+id/rl11"
+
+             >
             <TextView
+                android:id="@+id/t11"
                 style="@style/homeButton"
                 android:text="Music Mixing" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
-
+            android:id="@+id/rl12"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
             <TextView
+                android:id="@+id/t12"
                 style="@style/homeButton"
 
                 android:text="Photography" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl13"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
             <TextView
+                android:id="@+id/t13"
                 style="@style/homeButton"
                 android:text="Film and Video" />
         </android.support.v7.widget.CardView>
@@ -181,16 +214,18 @@
         >
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl14"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
             <TextView
+                android:id="@+id/t14"
                 style="@style/homeButton"
                 android:text="Animation" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
-
+           android:id="@+id/rl15"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
@@ -198,81 +233,98 @@
             >
             <TextView
                 style="@style/homeButton"
-
+                android:id="@+id/t15"
                 android:text="Graphics" />
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             style="@style/homeCardButton"
+            android:id="@+id/rl16"
             app:cardBackgroundColor="@color/buttonBackground"
             app:cardCornerRadius="10dp"
             >
             <TextView
+                android:id="@+id/t16"
                 style="@style/homeButton"
                 android:text="UI and UX" />
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="200dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:gravity="center"
-        android:padding="8dp"
-        >
+        android:padding="8dp">
+
         <android.support.v7.widget.CardView
+            android:id="@+id/rl17"
             style="@style/homeCardButton"
             app:cardBackgroundColor="@color/buttonBackground"
-            app:cardCornerRadius="10dp"
-            >
+            app:cardCornerRadius="10dp">
+
             <TextView
+                android:id="@+id/t17"
                 style="@style/homeButton"
                 android:text="Websites" />
         </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            style="@style/homeCardButton"
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/rl18"
+
+            style="@style/homeCardButton"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
-            app:cardCornerRadius="10dp"
-            >
-            <TextView
-                style="@style/homeButton"
+            app:cardCornerRadius="10dp">
 
+            <TextView
+                android:id="@+id/t18"
+
+                style="@style/homeButton"
                 android:text="Programming" />
         </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
+            android:id="@+id/rl19"
+
+
             style="@style/homeCardButton"
-
-
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
-            app:cardCornerRadius="10dp"
-            >
-            <TextView
-                style="@style/homeButton"
+            app:cardCornerRadius="10dp">
 
+            <TextView
+                android:id="@+id/t19"
+
+                style="@style/homeButton"
                 android:text="Apps" />
         </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
+            android:id="@+id/rl20"
+
+
             style="@style/homeCardButton"
-
-
             android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/buttonBackground"
-            app:cardCornerRadius="10dp"
-            >
-            <TextView
-                style="@style/homeButton"
+            app:cardCornerRadius="10dp">
 
+            <TextView
+                android:id="@+id/t20"
+
+                style="@style/homeButton"
                 android:text="Electronics" />
         </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
+            android:id="@+id/rl21"
             style="@style/homeCardButton"
             app:cardBackgroundColor="@color/buttonBackground"
-            app:cardCornerRadius="10dp"
-            >
+            app:cardCornerRadius="10dp">
+
             <TextView
+                android:id="@+id/t21"
                 style="@style/homeButton"
                 android:text="DIY" />
         </android.support.v7.widget.CardView>

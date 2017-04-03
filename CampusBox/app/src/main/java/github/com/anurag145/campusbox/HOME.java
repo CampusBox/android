@@ -1,5 +1,6 @@
 package github.com.anurag145.campusbox;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +30,9 @@ public class HOME extends AppCompatActivity {
             }
 
     public void onClickLogin(View view) {
+        Intent intent= new Intent(HOME.this,MainActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 

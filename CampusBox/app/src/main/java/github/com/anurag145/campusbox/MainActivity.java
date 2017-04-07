@@ -23,12 +23,15 @@ public class MainActivity extends AppCompatActivity {
     ViewPager mViewPager;
     TabLayout mTabLayout;
     TabLayout mTabLayout2;
+    Bundle item;
     ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        item=savedInstanceState;
        mTabLayout2=(TabLayout)findViewById(R.id.tabs2);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout2.addTab(mTabLayout2.newTab().setText("search"));
         mTabLayout2.addTab(mTabLayout2.newTab().setText("add"));
         mTabLayout2.addTab(mTabLayout2.newTab().setText("Me"));
+
     }
 
 

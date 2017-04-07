@@ -31,7 +31,7 @@ public class Events extends Fragment {
     private Context context;
     public Events()
     {
-        context=getActivity().getApplicationContext();
+
 
     }
     public static Events newInstance() {
@@ -43,8 +43,8 @@ public class Events extends Fragment {
 
         View view=inflater.inflate(R.layout.events,container,false);
         try {
-
-
+            context=getContext();
+           requestWithSomeHttpHeaders();
         }catch (Exception e)
         {
 
@@ -61,7 +61,7 @@ public class Events extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Log.d("Response", response);
+                        System.out.println(response);
                     }
                 },
                 new Response.ErrorListener()
@@ -82,6 +82,7 @@ public class Events extends Fragment {
                 return params;
             }
         };
+
         queue.add(postRequest);
 
     }

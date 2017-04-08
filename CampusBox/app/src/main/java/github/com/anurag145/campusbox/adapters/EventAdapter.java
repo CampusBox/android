@@ -1,12 +1,19 @@
 package github.com.anurag145.campusbox.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.text.ParseException;
+import java.util.StringTokenizer;
 
 import github.com.anurag145.campusbox.R;
 import github.com.anurag145.campusbox.jsonHandlers.EventJsonHandler;
@@ -16,10 +23,12 @@ import github.com.anurag145.campusbox.jsonHandlers.EventJsonHandler;
  */
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements RecyclerView.OnClickListener  {
-    EventJsonHandler mEventJsonHandler;
-    public EventAdapter(EventJsonHandler mEventJsonHandler)
+   private EventJsonHandler mEventJsonHandler;
+   private int count;
+    public EventAdapter(EventJsonHandler mEventJsonHandler,int count)
     {
         this.mEventJsonHandler=mEventJsonHandler;
+        this.count=count;
     }
     static class ViewHolder extends RecyclerView.ViewHolder
    {   private CardView  mCardView;
@@ -45,18 +54,27 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card,parent,false);
+
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+       try {
+           holder.mDate.setText(mEventJsonHandler.Date(position));
+       }catch (Exception e)
+       {
 
-
+       }
+        holder.mVenue.setText(mEventJsonHandler.Venue(position));
+        holder.mDesc.setText(mEventJsonHandler.Desc(position));
+        holder.mName.setText(mEventJsonHandler.Title(position));
+        holder.mEventImage.setImageBitmap(mEventJsonHandler.Image(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return count;
     }
 
     @Override

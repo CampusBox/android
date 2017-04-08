@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import github.com.anurag145.campusbox.R;
+import github.com.anurag145.campusbox.adapters.EventAdapter;
+import github.com.anurag145.campusbox.jsonHandlers.EventJsonHandler;
 
 /**
  * Created by Anurag145 on 4/2/2017.
@@ -29,6 +33,8 @@ import github.com.anurag145.campusbox.R;
 public class Events extends Fragment {
     private  String MYJSON;
     private Context context;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
     public Events()
     {
 
@@ -42,6 +48,8 @@ public class Events extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.events,container,false);
+        mRecyclerView=(RecyclerView)view.findViewById(R.id.event_list);
+
         try {
             context=getContext();
            requestWithSomeHttpHeaders();
@@ -61,7 +69,17 @@ public class Events extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        System.out.println(response);
+                        int scrollpostion =0;
+                        mLayoutManager=new LinearLayoutManager(getActivity());
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.scrollToPosition(0);
+                        EventJsonHandler mEventJsonHandler=new EventJsonHandler(response);
+                        EventAdapter ob = new EventAdapter( mEventJsonHandler,mEventJsonHandler.Length());
+                        mRecyclerView.setAdapter(ob);
+                        mRecyclerView.setVisibility(View.VISIBLE);
+
+
+
                     }
                 },
                 new Response.ErrorListener()
@@ -74,7 +92,7 @@ public class Events extends Fragment {
                 }
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders()  {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json");
                 params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTA3MTM4NzgsImV4cCI6MTQ5MzMwNTg3OCwianRpIjoiNDVuSW13bDZOQkpCcjJETlV2b1BoNyIsInVzZXJuYW1lIjoiY2hhd2xhYWRpdHlhOCIsImNvbGxlZ2VfaWQiOjF9.BF3KyogbSyBN0fY5VwBwgX88z4NIePTqleI9Y7dOLTg");

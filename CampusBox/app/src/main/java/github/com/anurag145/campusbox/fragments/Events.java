@@ -1,4 +1,4 @@
-package github.com.anurag145.campusbox.Fragments;
+package github.com.anurag145.campusbox.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

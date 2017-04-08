@@ -1,4 +1,4 @@
-package github.com.anurag145.campusbox.Fragments;
+package github.com.anurag145.campusbox.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,22 +11,23 @@ import android.view.ViewGroup;
 import github.com.anurag145.campusbox.R;
 
 /**
- * Created by Anurag145 on 4/3/2017.
+ * Created by Anurag145 on 4/2/2017.
  */
 
-public class Search extends Fragment {
-    public Search()
+public class Home extends Fragment {
+
+    public Home()
     {
 
     }
-    public static Search newInstance() {
-        return new Search();
+    public static Home newInstance() {
+        return new Home();
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("message","layout should inflate");
-        View view=inflater.inflate(R.layout.search,container,false);
+       View view=inflater.inflate(R.layout.handler,container,false);
         return view;
     }
 }

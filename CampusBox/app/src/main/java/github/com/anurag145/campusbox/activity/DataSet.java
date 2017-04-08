@@ -1,6 +1,8 @@
-package github.com.anurag145.campusbox;
+package github.com.anurag145.campusbox.activity;
 
 import java.util.HashMap;
+
+import github.com.anurag145.campusbox.R;
 
 /**
  * Created by Anurag145 on 4/2/2017.

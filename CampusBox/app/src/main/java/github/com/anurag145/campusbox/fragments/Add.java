@@ -1,8 +1,9 @@
-package github.com.anurag145.campusbox.Fragments;
+package github.com.anurag145.campusbox.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,23 +11,24 @@ import android.view.ViewGroup;
 import github.com.anurag145.campusbox.R;
 
 /**
- * Created by Anurag145 on 4/2/2017.
+ * Created by Anurag145 on 4/3/2017.
  */
 
-public class Creativity extends Fragment {
+public class Add extends Fragment {
 
-    public Creativity()
+    public Add()
     {
 
     }
-    public static Creativity newInstance()
-    {
-        return new Creativity();
+    public static Add newInstance() {
+        return new Add();
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.creativity,container,false);
-     return view;
+        Log.d("message","layout should inflate");
+        View view=inflater.inflate(R.layout.add,container,false);
+        return view;
     }
 }
+

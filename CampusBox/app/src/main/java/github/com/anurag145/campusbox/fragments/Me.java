@@ -1,4 +1,4 @@
-package github.com.anurag145.campusbox.Fragments;
+package github.com.anurag145.campusbox.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,21 +14,19 @@ import github.com.anurag145.campusbox.R;
  * Created by Anurag145 on 4/3/2017.
  */
 
-public class Add extends Fragment {
-
-    public Add()
+public class Me extends Fragment {
+    public Me()
     {
 
     }
-    public static Add newInstance() {
-        return new Add();
+    public static Me newInstance() {
+        return new Me();
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("message","layout should inflate");
-        View view=inflater.inflate(R.layout.add,container,false);
+        View view=inflater.inflate(R.layout.me,container,false);
         return view;
     }
 }
-

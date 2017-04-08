@@ -1,6 +1,5 @@
-package github.com.anurag145.campusbox;
+package github.com.anurag145.campusbox.activity;
 
-import android.app.Dialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,15 +7,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import github.com.anurag145.campusbox.Fragments.Add;
-import github.com.anurag145.campusbox.Fragments.Creativity;
-import github.com.anurag145.campusbox.Fragments.Events;
-import github.com.anurag145.campusbox.Fragments.Home;
-import github.com.anurag145.campusbox.Fragments.Me;
-import github.com.anurag145.campusbox.Fragments.Search;
+import github.com.anurag145.campusbox.fragments.Creativity;
+import github.com.anurag145.campusbox.fragments.Events;
+import github.com.anurag145.campusbox.fragments.Home;
+import github.com.anurag145.campusbox.R;
 
 public class MainActivity extends AppCompatActivity {
 

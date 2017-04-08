@@ -1,13 +1,14 @@
-package github.com.anurag145.campusbox;
+package github.com.anurag145.campusbox.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import github.com.anurag145.campusbox.R;
 
 public class HOME extends AppCompatActivity {
     private int count = 0;

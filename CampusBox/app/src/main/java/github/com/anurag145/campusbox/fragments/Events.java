@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -70,7 +71,7 @@ public class Events extends Fragment {
                     public void onResponse(String response) {
                         // response
                         int scrollpostion =0;
-                        mLayoutManager=new LinearLayoutManager(getActivity());
+                        mLayoutManager=new GridLayoutManager(getActivity(),1);
                         mRecyclerView.setLayoutManager(mLayoutManager);
                         mRecyclerView.scrollToPosition(0);
                         EventJsonHandler mEventJsonHandler=new EventJsonHandler(response);

@@ -18,18 +18,23 @@
         android:layout_alignParentBottom="true">
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
+            style="@style/MyTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
                android:layout_weight="1"
+
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
 
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs2"
+            style="@style/MyTabLayout"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
 

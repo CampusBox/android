@@ -1,5 +1,6 @@
 package github.com.anurag145.campusbox.activity;
 
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,15 +33,24 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mTabLayout = (TabLayout)findViewById(R.id.tabs);
+
         mViewPager.setOffscreenPageLimit(5);
         mViewPager.setAdapter(mViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(R.mipmap.ic_home_white_24dp).setText("home"));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(R.mipmap.ic_event_white_24dp).setText("event"));
+        mTabLayout.addTab(mTabLayout.newTab().setIcon(R.mipmap.ic_blur_on_white_24dp).setText("Creativity"));
         mViewPagerAdapter.notifyDataSetChanged();
         mViewPager.setCurrentItem(0);
+        mTabLayout.setSelectedTabIndicatorColor(Color.WHITE);
+        mTabLayout2.setSelectedTabIndicatorColor(Color.WHITE);
         mTabLayout2.setSelectedTabIndicatorHeight(0);
-        mTabLayout2.addTab(mTabLayout2.newTab().setText("search"));
-        mTabLayout2.addTab(mTabLayout2.newTab().setText("add"));
-        mTabLayout2.addTab(mTabLayout2.newTab().setText("Me"));
+        mTabLayout.getTabAt(0).setIcon(R.mipmap.ic_home_white_24dp).setText("home");
+        mTabLayout.getTabAt(1).setIcon(R.mipmap.ic_event_white_24dp).setText("event");
+        mTabLayout.getTabAt(2).setIcon(R.mipmap.ic_blur_on_white_24dp).setText("Creativity");
+        mTabLayout2.addTab(mTabLayout2.newTab().setIcon(R.mipmap.ic_search_white_24dp).setText("search"));
+        mTabLayout2.addTab(mTabLayout2.newTab().setIcon(R.mipmap.ic_add_circle_white_24dp).setText("add"));
+        mTabLayout2.addTab(mTabLayout2.newTab().setIcon(R.mipmap.ic_person_white_24dp).setText("Me"));
 
     }
 

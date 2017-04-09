@@ -28,6 +28,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     }
     static class ViewHolder extends RecyclerView.ViewHolder
    {   private RelativeLayout mRelativeLayout;
+       private ImageView mAppreciated;
        private CardView  mCardView;
        private ImageView mEventImage;
        private TextView  mDate;
@@ -38,6 +39,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
       public  ViewHolder(View view)
       {
           super(view);
+          mAppreciated=(ImageView)view.findViewById(R.id.Appreciated_image);
           mRelativeLayout=(RelativeLayout)view.findViewById(R.id.filter);
           mCardView=(CardView)view.findViewById(R.id.eventCard);
           mDate=(TextView)view.findViewById(R.id.date);
@@ -59,7 +61,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
        if(position==0) {
            holder.mRelativeLayout.setVisibility(View.VISIBLE);
            holder.mRelativeLayout.setOnClickListener(this);
@@ -71,7 +73,19 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
        }
         holder.mCardView.setOnClickListener(this);
-        holder.mLinearLayout.setOnClickListener(this);
+        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(holder.mAppreciated.getContentDescription().toString().equals("notheart")) {
+                    holder.mAppreciated.setContentDescription("heart");
+                    holder.mAppreciated.setImageResource(R.mipmap.heart);
+                }
+                else {
+                    holder.mAppreciated.setContentDescription("notheart");
+                    holder.mAppreciated.setImageResource(R.mipmap.notheart);
+                }
+                }
+        });
         holder.mVenue.setText(mEventJsonHandler.Venue(position));
         holder.mDesc.setText(mEventJsonHandler.Desc(position));
         holder.mName.setText(mEventJsonHandler.Title(position));
@@ -80,13 +94,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 10;
+        return count;
     }
 
     @Override
     public void onClick(View view) {
 
-        Log.d("onClick",String.valueOf(view.getId()));
+
     }
 
 }

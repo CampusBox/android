@@ -132,6 +132,7 @@
                 android:layout_gravity="center_vertical"
                 android:paddingTop="16dp">
                 <ImageView
+                    android:contentDescription="notheart"
                     android:id="@+id/Appreciated_image"
                     android:layout_gravity="center"
                     android:layout_width="30dp"

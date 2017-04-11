@@ -1,1 +1,1 @@
-# Campusbox-The-app.
+# Campusbox-Android Application.

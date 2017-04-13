@@ -48,10 +48,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
           mDesc=(TextView)view.findViewById(R.id.event_desc);
           mEventImage=(ImageView)view.findViewById(R.id.event_image);
           mLinearLayout=(LinearLayout)view.findViewById(R.id.Appreciated);
-
-
       }
-
    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,7 +56,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
        if(position==0) {

@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import github.com.anurag145.campusbox.R;
 import github.com.anurag145.campusbox.adapters.EventAdapter;
@@ -31,8 +32,9 @@ import github.com.anurag145.campusbox.jsonHandlers.EventJsonHandler;
 
 public class Home extends Fragment {
     private Context context;
-    String s= "<p>Soch se farq padta hai...</p><p><br></p><p>Koi barish me hansta hai</p><p>Koi barish me rota hai</p><p>Koi dhup se dar ke bhaage</p><p>Koi dhup me tan tapata hai</p><p><br></p><p> </p><p><span style=\"letter-spacing: 0.02em;\">Kisi ki jaan paise me</span><br></p><p>Koi paise se marta hai</p><p>Udhta panchi aaram chahe</p><p>Chalne wale ko udhna hai</p><p> </p><p><br></p><p> </p><p>Kaam chahe ghar baetha naujawan</p><p>Chutti ko kaam waala tarasta hai</p><p><span style=\"letter-spacing: 0.02em;\">Koi nafrat faelata duniya me</span><br></p><p>Koi sirf prem par jeeta hai</p><p><br></p><p> </p><p>Soch se farq padta hai...</p>";
 
+    String s= "<p>Soch se farq padta hai...</p><p><br></p><p>Koi barish me hansta hai</p><p>Koi barish me rota hai</p><p>Koi dhup se dar ke bhaage</p><p>Koi dhup me tan tapata hai</p><p><br></p><p> </p><p><span style=\"letter-spacing: 0.02em;\">Kisi ki jaan paise me</span><br></p><p>Koi paise se marta hai</p><p>Udhta panchi aaram chahe</p><p>Chalne wale ko udhna hai</p><p> </p><p><br></p><p> </p><p>Kaam chahe ghar baetha naujawan</p><p>Chutti ko kaam waala tarasta hai</p><p><span style=\"letter-spacing: 0.02em;\">Koi nafrat faelata duniya me</span><br></p><p>Koi sirf prem par jeeta hai</p><p><br></p><p> </p><p>Soch se farq padta hai...</p>";
+    StringTokenizer stringTokenizer= new StringTokenizer(s,"</p>");
     public Home()
     {
 
@@ -47,7 +49,7 @@ public class Home extends Fragment {
        View view=inflater.inflate(R.layout.handler,container,false);
         WebView webView= (WebView)view.findViewById(R.id.creativity_desc);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadData("<!DOCTYPE html> <html><body>"+s+"</body></html>","text/html; charset=utf-8","UTF-8");
+         webView.loadData("<!DOCTYPE html> <html><head></head><body>"+s+"+</body></html>","text/html; charset=utf-8","UTF-8");
         context=getContext();
         //requestWithSomeHttpHeaders();
         return view;

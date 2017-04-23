@@ -35,6 +35,9 @@ public class Events extends Fragment {
     private  String MYJSON;
     private Context context;
     private RecyclerView mRecyclerView;
+    private int mcount;
+    EventAdapter ob;
+    EventJsonHandler mEventJsonHandler;
     private RecyclerView.LayoutManager mLayoutManager;
     public Events()
     {
@@ -51,7 +54,7 @@ public class Events extends Fragment {
         View view=inflater.inflate(R.layout.events,container,false);
         mRecyclerView=(RecyclerView)view.findViewById(R.id.event_list);
 
-        try {
+                try {
             context=getContext();
            requestWithSomeHttpHeaders();
         }catch (Exception e)
@@ -60,6 +63,44 @@ public class Events extends Fragment {
         }
 
         return view;
+    }
+    public void nextRequest()
+    {   Log.e("yeah","hmm");
+        RequestQueue queue=Volley.newRequestQueue(context);
+        String url="https://app.campusbox.org/api/public/events?offset=3";
+        StringRequest getRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                     mEventJsonHandler= new EventJsonHandler(response);
+                        int temp= mEventJsonHandler.Length();
+
+                        if(temp!=0)
+
+                        {   ob.setFlag(false);
+                            ob.setmEventJsonHandler(mEventJsonHandler);
+                            Log.e("countprev",String.valueOf(ob.getPrevCount()+temp +1));
+                            ob.setCount(ob.getPrevCount()+temp+1);
+                            ob.notifyItemInserted(ob.getPrevCount()+1);
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }
+        ){@Override
+        public Map<String, String> getHeaders()  {
+        Map<String, String>  params = new HashMap<String, String>();
+        params.put("Content-Type", "application/json");
+        params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTA3MTM4NzgsImV4cCI6MTQ5MzMwNTg3OCwianRpIjoiNDVuSW13bDZOQkpCcjJETlV2b1BoNyIsInVzZXJuYW1lIjoiY2hhd2xhYWRpdHlhOCIsImNvbGxlZ2VfaWQiOjF9.BF3KyogbSyBN0fY5VwBwgX88z4NIePTqleI9Y7dOLTg");
+
+        return params;
+    }
+    };
+    queue.add(getRequest);
     }
     public void requestWithSomeHttpHeaders() {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -70,13 +111,15 @@ public class Events extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        int scrollpostion =0;
+
                         mLayoutManager=new GridLayoutManager(getActivity(),1);
                         mRecyclerView.setLayoutManager(mLayoutManager);
                         mRecyclerView.scrollToPosition(0);
-                        EventJsonHandler mEventJsonHandler=new EventJsonHandler(response);
-                        EventAdapter ob = new EventAdapter( mEventJsonHandler,mEventJsonHandler.Length());
+                        mEventJsonHandler =new EventJsonHandler(response);
+                        mcount=mEventJsonHandler.Length();
+                        ob = new EventAdapter( mEventJsonHandler,mcount);
                         mRecyclerView.setAdapter(ob);
+                        mRecyclerView.addOnScrollListener(onScrollListener);
                         mRecyclerView.setVisibility(View.VISIBLE);
 
 
@@ -105,4 +148,20 @@ public class Events extends Fragment {
         queue.add(postRequest);
 
     }
+    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrolled(RecyclerView mRecyclerView, int dx, int dy) {
+
+            GridLayoutManager mGridLayoutManager=(GridLayoutManager)mRecyclerView.getLayoutManager();
+            if(!ob.getFlag())
+                return;
+            int visible =mGridLayoutManager.findLastCompletelyVisibleItemPosition();
+             if(visible==ob.getPrevCount())
+                 nextRequest();
+
+
+        }
+
+    };
+
 }

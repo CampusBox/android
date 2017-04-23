@@ -21,6 +21,12 @@ import github.com.anurag145.campusbox.jsonHandlers.EventJsonHandler;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements RecyclerView.OnClickListener  {
    private EventJsonHandler mEventJsonHandler;
    private int count;
+   private int prevCount=0;
+    private boolean flag=false;
+    public void setmEventJsonHandler(EventJsonHandler ob)
+    {
+        this.mEventJsonHandler=ob;
+    }
     public EventAdapter(EventJsonHandler mEventJsonHandler,int count)
     {
         this.mEventJsonHandler=mEventJsonHandler;
@@ -68,6 +74,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
        {
 
        }
+
         holder.mCardView.setOnClickListener(this);
         holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +93,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.mDesc.setText(mEventJsonHandler.Desc(position));
         holder.mName.setText(mEventJsonHandler.Title(position));
         holder.mEventImage.setImageBitmap(mEventJsonHandler.Image(position));
+        if(position==getItemCount()-1)
+        {
+            flag=true;
+            prevCount=position;
+        }
     }
 
     @Override
@@ -97,6 +109,24 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onClick(View view) {
 
 
+    }
+    public int getPrevCount()
+
+    {
+        return prevCount;
+    }
+    public void setCount(int count)
+    {
+     this.count=count;
+    }
+    public void setFlag(boolean f)
+    {
+        this.flag=f;
+    }
+
+    public boolean getFlag()
+    {
+        return flag;
     }
 
 }

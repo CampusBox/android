@@ -21,6 +21,7 @@ import github.com.anurag145.campusbox.jsonHandlers.EventJsonHandler;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> implements RecyclerView.OnClickListener  {
    private EventJsonHandler mEventJsonHandler;
    private int count;
+   private int counter=0;
    private int prevCount=0;
     private boolean flag=false;
     public void setmEventJsonHandler(EventJsonHandler ob)
@@ -41,6 +42,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
        private TextView  mName;
        private TextView  mVenue;
        private TextView  mDesc;
+
        private LinearLayout mLinearLayout;
       public  ViewHolder(View view)
       {
@@ -69,7 +71,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
            holder.mRelativeLayout.setOnClickListener(this);
        }
        try {
-           holder.mDate.setText(mEventJsonHandler.Date(position));
+           holder.mDate.setText(mEventJsonHandler.Date(counter));
        }catch (Exception e)
        {
 
@@ -89,15 +91,19 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 }
                 }
         });
-        holder.mVenue.setText(mEventJsonHandler.Venue(position));
-        holder.mDesc.setText(mEventJsonHandler.Desc(position));
-        holder.mName.setText(mEventJsonHandler.Title(position));
-        holder.mEventImage.setImageBitmap(mEventJsonHandler.Image(position));
+        holder.mVenue.setText(mEventJsonHandler.Venue(counter));
+        holder.mDesc.setText(mEventJsonHandler.Desc(counter));
+        holder.mName.setText(mEventJsonHandler.Title(counter));
+        holder.mEventImage.setImageBitmap(mEventJsonHandler.Image(counter));
+        Log.e("VALUE",String.valueOf(counter));
         if(position==getItemCount()-1)
         {
             flag=true;
+            counter=0;
             prevCount=position;
         }
+        else
+        counter++;
     }
 
     @Override

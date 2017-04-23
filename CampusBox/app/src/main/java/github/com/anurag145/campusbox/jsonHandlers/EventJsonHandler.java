@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -26,6 +27,7 @@ public class EventJsonHandler {
     private int n=0;
     private JSONObject jsonObject;
     private JSONArray jsonArray;
+    private JSONObject metadata;
 
     public EventJsonHandler()
     {
@@ -36,11 +38,12 @@ public class EventJsonHandler {
     {  try
         {
             jsonObject =new JSONObject(myjson);
+            metadata=jsonObject.getJSONObject("meta");
             jsonArray=jsonObject.getJSONArray("data");
             n=jsonArray.length();
         }catch (Exception e)
         {
-
+          Log.e("shit",e.toString());
         }
         finally {
             if(n==0)
@@ -48,6 +51,15 @@ public class EventJsonHandler {
 
             }
         }
+    }
+    public String urlPagination()
+    {    try {
+        return "limit=" + metadata.getString("limit") + "&offset=" + metadata.getString("offset");
+    }catch (Exception e)
+    {
+
+    }
+    return null;
     }
     public  String Date(int position)throws  ParseException
     { try

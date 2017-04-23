@@ -32,12 +32,14 @@ import github.com.anurag145.campusbox.jsonHandlers.EventJsonHandler;
  */
 
 public class Events extends Fragment {
-    private  String MYJSON;
+
     private Context context;
     private RecyclerView mRecyclerView;
     private int mcount;
     EventAdapter ob;
+
     EventJsonHandler mEventJsonHandler;
+    EventJsonHandler eventJsonHandler=null;
     private RecyclerView.LayoutManager mLayoutManager;
     public Events()
     {
@@ -67,22 +69,23 @@ public class Events extends Fragment {
     public void nextRequest()
     {   Log.e("yeah","hmm");
         RequestQueue queue=Volley.newRequestQueue(context);
-        String url="https://app.campusbox.org/api/public/events?offset=3";
+        String url="https://app.campusbox.org/api/public/events?"+mEventJsonHandler.urlPagination();
         StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                     mEventJsonHandler= new EventJsonHandler(response);
+                        eventJsonHandler=mEventJsonHandler;
+                        mEventJsonHandler= new EventJsonHandler(response);
                         int temp= mEventJsonHandler.Length();
 
                         if(temp!=0)
 
                         {   ob.setFlag(false);
                             ob.setmEventJsonHandler(mEventJsonHandler);
-                            Log.e("countprev",String.valueOf(ob.getPrevCount()+temp +1));
                             ob.setCount(ob.getPrevCount()+temp+1);
                             ob.notifyItemInserted(ob.getPrevCount()+1);
                         }
+
                     }
 
                 }, new Response.ErrorListener() {
@@ -103,15 +106,16 @@ public class Events extends Fragment {
     queue.add(getRequest);
     }
     public void requestWithSomeHttpHeaders() {
+
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url = "http://app.campusbox.org/api/public/events";
+        String url = "http://app.campusbox.org/api/public/events?limit=2&offset=0";
         StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response) {
                         // response
-
+                        Log.e("damn","damn");
                         mLayoutManager=new GridLayoutManager(getActivity(),1);
                         mRecyclerView.setLayoutManager(mLayoutManager);
                         mRecyclerView.scrollToPosition(0);
@@ -121,9 +125,6 @@ public class Events extends Fragment {
                         mRecyclerView.setAdapter(ob);
                         mRecyclerView.addOnScrollListener(onScrollListener);
                         mRecyclerView.setVisibility(View.VISIBLE);
-
-
-
                     }
                 },
                 new Response.ErrorListener()
@@ -131,7 +132,7 @@ public class Events extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO Auto-generated method stub
-                        Log.d("ERROR","error => "+error.toString());
+                        Log.e("ERROR","error => "+error.toString());
                     }
                 }
         ) {

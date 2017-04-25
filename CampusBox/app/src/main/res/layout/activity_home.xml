@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-     android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="github.com.anurag145.campusbox.activity.HOME">
+    tools:context="in.exun.campusbox.activity.HOME">
 
     <TextView
+        android:id="@+id/welcometext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
+        android:text="@string/static_home_title"
         android:textAlignment="center"
-        android:text="@string/home_text"
-        android:id="@+id/welcometext" />
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp">
 
-        <include layout="@layout/welcome_button"
-                        />
+        <include
+            layout="@layout/component_interests" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/loginSequence"
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="352dp">
+        android:layout_marginTop="352dp"
+        android:visibility="gone">
+
         <include layout="@layout/login_sequence">
 
         </include>
+
         <TextView
-            android:textSize="12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
             android:text="By continuing,you agree to our Terms and Privacy Policy"
-            />
+            android:textSize="12sp" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -1,8 +1,22 @@
 <resources>
-    <string name="app_name">Campusbox</string>
-    <string name="home_text">Select at least three topics to personalize \n your content stream</string>
+    <string name="app_name">CampusBox</string>
+
+    <string name="facebook_app_id">1250377088376164</string>
+    <string name="fb_login_protocol_scheme">fb1250377088376164</string>
+
+    <string name="server_client_id" >702228530885-vi264d7g6v5ivbcmebjfpomr0hmliomd.apps.googleusercontent.com</string>
+
+    <string name="static_home_title">Select at least three topics to personalize \n your content stream</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="static_splash_logo">A better college life!</string>
+    <string name="static_signup_title">Add your college details to\nyour profile to get important updates.</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_event">Events</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_me">Me</string>
+    <string name="menu_creativity">Creativity</string>
 </resources>

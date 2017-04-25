@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "702228530885",
+    "project_id": "thaparexpress"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702228530885:android:10192d8ee190122b",
+        "android_client_info": {
+          "package_name": "in.exun.campusbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702228530885-msagqa2jmjqpdkr3c9vk9d7mbdqlg03r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.exun.campusbox",
+            "certificate_hash": "9352e80fcbf728f26a174d48c508df4870e757a6"
+          }
+        },
+        {
+          "client_id": "702228530885-vi264d7g6v5ivbcmebjfpomr0hmliomd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4BU6J658SrMz04kChja4IFMIekC6Jt-8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

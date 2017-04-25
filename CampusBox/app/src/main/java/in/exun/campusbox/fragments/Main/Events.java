@@ -69,7 +69,7 @@ public class Events extends Fragment {
     public void nextRequest() {
         Log.e("yeah", "hmm");
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url = "https://app.campusbox.org/api/public/fragment_events?" + mEventJsonHandler.urlPagination();
+        String url = "https://app.campusbox.org/api/public/events?" + mEventJsonHandler.urlPagination();
         StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -111,7 +111,7 @@ public class Events extends Fragment {
     public void requestWithSomeHttpHeaders() {
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url = "http://app.campusbox.org/api/public/fragment_events?limit=2&offset=0";
+        String url = "http://app.campusbox.org/api/public/events?limit=2&offset=0";
         StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override

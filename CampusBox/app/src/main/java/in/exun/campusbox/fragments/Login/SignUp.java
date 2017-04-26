@@ -172,7 +172,7 @@ public class SignUp extends Fragment {
                     JSONObject jObj = new JSONObject(response);
                     String status = jObj.getString("status");
 
-                    if ( status.startsWith("Already Registered")){
+                    if ( status.startsWith("Already Registered") || status.equals("Registered Successfully")){
                         Toast.makeText(getActivity(), "Signed up!", Toast.LENGTH_SHORT).show();
                         String token = jObj.getString("token");
                         Log.d(TAG, "onResponse: " + token);

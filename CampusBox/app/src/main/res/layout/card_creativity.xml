@@ -29,7 +29,7 @@
                     android:id="@+id/img_author"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@drawable/circle_image"
+                    app:srcCompat="@drawable/ic_account_placeholder"
                     />
 
                 <TextView

@@ -33,7 +33,7 @@ import in.exun.campusbox.activity.MainActivity;
 import in.exun.campusbox.activity.SingleEvent;
 import in.exun.campusbox.activity.SinglePost;
 import in.exun.campusbox.adapters.CreativeAdapter;
-import in.exun.campusbox.adapters.EventAdapter;
+import in.exun.campusbox.adapters.RVAEventsHome;
 import in.exun.campusbox.helper.AppConstants;
 import in.exun.campusbox.helper.AppController;
 import in.exun.campusbox.jsonHandlers.CreativeJsonHandler;
@@ -60,8 +60,8 @@ public class Home extends Fragment {
 
     EventJsonHandler mEventJsonHandler;
     CreativeJsonHandler mCreativeJsonHandler;
-    private RecyclerView.Adapter mAdapterEvents,mAdapterCreative;
-    private RecyclerView.LayoutManager mLayoutManagerEvents,mLayoutManagerCreative;
+    private RecyclerView.Adapter mAdapterEvents, mAdapterCreative;
+    private RecyclerView.LayoutManager mLayoutManagerEvents, mLayoutManagerCreative;
 
     @Nullable
     @Override
@@ -90,14 +90,14 @@ public class Home extends Fragment {
         btnMoreEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).displayView(1,true);
+                ((MainActivity) getActivity()).displayView(1, true);
             }
         });
 
         btnMoreCreative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).displayView(3,true);
+                ((MainActivity) getActivity()).displayView(3, true);
             }
         });
 
@@ -132,7 +132,7 @@ public class Home extends Fragment {
         mRVEvents.setNestedScrollingEnabled(false);
         mLayoutManagerEvents = new LinearLayoutManager(getApplicationContext());
         mRVEvents.setLayoutManager(mLayoutManagerEvents);
-        mAdapterEvents = new EventAdapter();
+        mAdapterEvents = new RVAEventsHome();
         mRVEvents.setAdapter(mAdapterEvents);
 
         fetchEvents();
@@ -152,7 +152,7 @@ public class Home extends Fragment {
 
     public void fetchEvents() {
 
-        updateUI(AppConstants.PROCESS_LOAD,PART_EVENTS);
+        updateUI(AppConstants.PROCESS_LOAD, PART_EVENTS);
 
         StringRequest postRequest = new StringRequest(Request.Method.GET, AppConstants.URL_DASH_EVENTS,
                 new Response.Listener<String>() {
@@ -165,7 +165,7 @@ public class Home extends Fragment {
                                 JSONArray data = resp.getJSONArray("data");
                                 if (data.length() > 0) {
                                     mEventJsonHandler = new EventJsonHandler(data, null); //Sending null because we don't need pagination here
-                                    mAdapterEvents = new EventAdapter(mEventJsonHandler, mEventJsonHandler.Length());
+                                    mAdapterEvents = new RVAEventsHome(mEventJsonHandler);
                                     mRVEvents.setAdapter(mAdapterEvents);
                                     updateUI(AppConstants.PROCESS_SUCCESS, PART_EVENTS);
                                 } else {
@@ -207,8 +207,8 @@ public class Home extends Fragment {
 
     public void fetchCreative() {
 
-        updateUI(AppConstants.PROCESS_LOAD,PART_CREATIVITY);
-        String url =  AppConstants.URL_DASH_CONTENTS + "?limit=4&offset=0";
+        updateUI(AppConstants.PROCESS_LOAD, PART_CREATIVITY);
+        String url = AppConstants.URL_DASH_CONTENTS + "?limit=4&offset=0";
 
         StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -220,7 +220,7 @@ public class Home extends Fragment {
                                 JSONArray data = resp.getJSONArray("data");
                                 if (data.length() > 0) {
                                     mCreativeJsonHandler = new CreativeJsonHandler(data, null); //Sending null because we don't need pagination here
-                                    mAdapterCreative = new CreativeAdapter(getActivity(),mCreativeJsonHandler, data.length());
+                                    mAdapterCreative = new CreativeAdapter(getActivity(), mCreativeJsonHandler, data.length());
                                     mRVContents.setAdapter(mAdapterCreative);
                                     updateUI(AppConstants.PROCESS_SUCCESS, PART_CREATIVITY);
                                 } else {
@@ -276,6 +276,10 @@ public class Home extends Fragment {
             case AppConstants.PROCESS_FAILURE:
                 Toast.makeText(getActivity(), "Error in internet", Toast.LENGTH_SHORT).show();
                 fabMenu.setVisibility(View.GONE);
+                if (partCode == PART_EVENTS)
+                    contWaitEvents.setVisibility(View.GONE);
+                else
+                    contWaitCreative.setVisibility(View.GONE);
                 break;
             case AppConstants.PROCESS_LOAD:
                 if (partCode == PART_EVENTS) {
@@ -295,14 +299,14 @@ public class Home extends Fragment {
     public void onResume() {
         super.onResume();
 
-        ((EventAdapter) mAdapterEvents).setOnItemClickListener(new EventAdapter.MyClickListener() {
+        ((RVAEventsHome) mAdapterEvents).setOnItemClickListener(new RVAEventsHome.MyClickListener() {
             @Override
             public void onItemClick(int position, View v, int type) {
 
                 switch (type) {
                     case 0:
-                        Intent i = new Intent(getActivity(),SingleEvent.class);
-                        i.putExtra(AppConstants.TAG_OBJ,mEventJsonHandler.getJsonArray(position));
+                        Intent i = new Intent(getActivity(), SingleEvent.class);
+                        i.putExtra(AppConstants.TAG_OBJ, mEventJsonHandler.getSingleData(position));
                         startActivity(i);
                         break;
                     case 1:
@@ -320,8 +324,8 @@ public class Home extends Fragment {
             public void onItemClick(int position, View v, int type) {
                 switch (type) {
                     case 0:
-                        Intent i = new Intent(getActivity(),SinglePost.class);
-                        i.putExtra(AppConstants.TAG_OBJ,mCreativeJsonHandler.getJsonArray(position));
+                        Intent i = new Intent(getActivity(), SinglePost.class);
+                        i.putExtra(AppConstants.TAG_OBJ, mCreativeJsonHandler.getJsonArray(position));
                         startActivity(i);
                         break;
                     case 1:
@@ -338,7 +342,7 @@ public class Home extends Fragment {
     private void sendOneWyRequest(String url) {
         Log.d(TAG, "sendOneWyRequest: " + url);
 
-        StringRequest postRequest = new StringRequest(Request.Method.GET, url,
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -364,5 +368,11 @@ public class Home extends Fragment {
         };
 
         AppController.getInstance().addToRequestQueue(postRequest, TAG);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        AppController.getInstance().cancelPendingRequests(TAG);
     }
 }

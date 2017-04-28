@@ -35,7 +35,7 @@
             >
 
             <include android:id="@+id/comp_multi_select"
-                layout="@layout/component_interests"
+                layout="@layout/comp_interests"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 />

@@ -75,7 +75,7 @@ public class CreativeAdapter extends RecyclerView.Adapter<CreativeAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.creativity_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_creativity, parent, false);
 
         return new ViewHolder(view);
     }

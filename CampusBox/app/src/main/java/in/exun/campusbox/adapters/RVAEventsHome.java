@@ -17,28 +17,30 @@ import in.exun.campusbox.jsonHandlers.EventJsonHandler;
  * Created by Anurag145 on 4/8/2017.
  */
 
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> {
-    private static final String TAG = "EventAdapter";
+public class RVAEventsHome extends RecyclerView.Adapter<RVAEventsHome.ViewHolder> {
+    private static final String TAG = "RVAEvents";
     private EventJsonHandler mEventJsonHandler;
     private static MyClickListener myClickListener;
     private int count;
     private int prevCount = 0;
     private boolean flag = false;
 
-    public EventAdapter() {
+    public RVAEventsHome() {
     }
 
-    public void setmEventJsonHandler(EventJsonHandler ob) {
-        this.mEventJsonHandler = ob;
-    }
-
-    public EventAdapter(EventJsonHandler mEventJsonHandler, int count) {
+    public void updateHandler(EventJsonHandler mEventJsonHandler, int addedCount) {
         this.mEventJsonHandler = mEventJsonHandler;
-        this.count = count;
+        setCount(prevCount + 1 + addedCount);
+        notifyItemInserted(prevCount + 1);
+    }
+
+    public RVAEventsHome(EventJsonHandler mEventJsonHandler) {
+        this.mEventJsonHandler = mEventJsonHandler;
+        this.count = mEventJsonHandler.Length();
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
-        EventAdapter.myClickListener = myClickListener;
+        RVAEventsHome.myClickListener = myClickListener;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder
@@ -74,8 +76,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder: inflated");
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.event_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_event, parent, false);
 
         return new ViewHolder(view);
     }
@@ -88,8 +89,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         int counter = holder.getAdapterPosition();
-
-        Log.d(TAG, "onBindViewHolder: " + counter);
 
         try {
             holder.textDate.setText(mEventJsonHandler.getDate(counter));
@@ -150,6 +149,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.textDesc.setText(mEventJsonHandler.getDesc(counter));
         holder.textTitle.setText(mEventJsonHandler.getTitle(counter));
         holder.imgEvent.setImageBitmap(mEventJsonHandler.getImage(counter));
+
         if (holder.getAdapterPosition() == getItemCount() - 1 && mEventJsonHandler.isAllowedPagination()) {
             flag = true;
             prevCount = holder.getAdapterPosition();
@@ -161,9 +161,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         return count;
     }
 
-    public int getPrevCount()
-
-    {
+    public int getPrevCount() {
         return prevCount;
     }
 
@@ -172,6 +170,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     }
 
     public void setFlag(boolean f) {
+        Log.d(TAG, "setFlag: negate this bish");
         this.flag = f;
     }
 

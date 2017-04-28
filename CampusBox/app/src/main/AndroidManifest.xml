@@ -3,7 +3,7 @@
     package="in.exun.campusbox">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name=".helper.AppController"
@@ -14,7 +14,6 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="70e8e22152b8c31f892ccabf9cbfeea6399bc130" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -39,9 +38,7 @@
         </activity>
         <activity
             android:name=".activity.Login"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -54,6 +51,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.SingleEvent"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.SinglePost"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

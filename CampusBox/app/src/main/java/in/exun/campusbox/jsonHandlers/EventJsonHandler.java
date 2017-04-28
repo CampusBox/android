@@ -7,6 +7,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -23,27 +24,41 @@ import java.util.StringTokenizer;
 public class EventJsonHandler {
 
 
+    private static final String TAG = "EventJsonHandler";
     private int n = 0;
-    private JSONObject jsonObject;
-    private JSONArray jsonArray;
+    private JSONArray data;
     private JSONObject metadata;
-
-    public EventJsonHandler() {
-
-    }
+    private boolean allowPagination = true;
 
     public EventJsonHandler(String myjson) {
         try {
-            jsonObject = new JSONObject(myjson);
+            JSONObject jsonObject = new JSONObject(myjson);
             metadata = jsonObject.getJSONObject("meta");
-            jsonArray = jsonObject.getJSONArray("data");
-            n = jsonArray.length();
+            data = jsonObject.getJSONArray("data");
+            allowPagination = true;
+            n = data.length();
         } catch (Exception e) {
             Log.e("shit", e.toString());
-        } finally {
-            if (n == 0) {
+        }
+    }
 
-            }
+    public EventJsonHandler(JSONArray data, JSONObject metadata) {
+        this.data = data;
+        this.metadata = metadata;
+        if (metadata == null) {
+            Log.d("EventJsonHandler: ", "No pagination req");
+            allowPagination = false;
+        }
+        n = data.length();
+    }
+
+    public String getJsonArray(int pos){
+        try {
+            JSONArray array = new JSONArray();
+            return array.put(data.getJSONObject(pos)).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -51,27 +66,28 @@ public class EventJsonHandler {
         try {
             return "limit=" + metadata.getString("limit") + "&offset=" + metadata.getString("offset");
         } catch (Exception e) {
-
+            e.printStackTrace();
+            return "limit=6&offset=0";
         }
-        return null;
     }
 
-    public String Date(int position) throws ParseException {
+    public String getDate(int position) throws ParseException {
         try {
 
-            JSONObject jsonObject1 = jsonArray.getJSONObject(position);
+            JSONObject jsonObject1 = data.getJSONObject(position);
             jsonObject1 = jsonObject1.getJSONObject("timings");
             Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(new StringTokenizer(jsonObject1.getJSONObject("from")
                     .getString("date"), "T").nextToken());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            String from_to = new SimpleDateFormat("dd MMM").format(calendar.getTime());
+            String from = new SimpleDateFormat("dd MMM").format(calendar.getTime());
             date = new SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(new StringTokenizer(jsonObject1.getJSONObject("to")
                     .getString("date"), "T").nextToken());
             calendar.setTime(date);
-            from_to = from_to + " - " + new SimpleDateFormat("dd MMM").format(calendar.getTime());
-            Log.e("date", from_to);
-            return from_to;
+            String to = new SimpleDateFormat("dd MMM").format(calendar.getTime());
+            if (!from.equals(to))
+                from = from + " - " + to;
+            return from;
         } catch (Exception e) {
             Log.e("date", e.toString());
             return null;
@@ -79,10 +95,10 @@ public class EventJsonHandler {
 
     }
 
-    public String Venue(int position) {
+    public String getVenue(int position) {
         try {
 
-            JSONObject jsonObject1 = jsonArray.getJSONObject(position);
+            JSONObject jsonObject1 = data.getJSONObject(position);
             jsonObject1 = jsonObject1.getJSONObject("details");
             return jsonObject1.getString("venue");
         } catch (Exception e) {
@@ -90,9 +106,9 @@ public class EventJsonHandler {
         }
     }
 
-    public String Desc(int position) {
+    public String getDesc(int position) {
         try {
-            JSONObject jsonObject1 = jsonArray.getJSONObject(position);
+            JSONObject jsonObject1 = data.getJSONObject(position);
             return jsonObject1.getString("subtitle");
         } catch (Exception e) {
             return null;
@@ -103,9 +119,9 @@ public class EventJsonHandler {
         return n;
     }
 
-    public String Title(int position) {
+    public String getTitle(int position) {
         try {
-            JSONObject jsonObject1 = jsonArray.getJSONObject(position);
+            JSONObject jsonObject1 = data.getJSONObject(position);
             return jsonObject1.getString("title");
         } catch (Exception e) {
             return null;
@@ -113,9 +129,45 @@ public class EventJsonHandler {
 
     }
 
-    public Bitmap Image(int position) {
+    public boolean isAppreciated(int pos) {
         try {
-            JSONObject jsonObject1 = jsonArray.getJSONObject(position);
+            JSONObject obj = data.getJSONObject(pos).getJSONObject("Actions").getJSONObject("Bookmarked");
+            return obj.getBoolean("status");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void setAppreciated(int pos, boolean value) {
+        try {
+            JSONObject obj = data.getJSONObject(pos).getJSONObject("Actions").getJSONObject("Bookmarked");
+            obj.put("status", value);
+        } catch (Exception e) {
+            Log.d(TAG, "setAppreciated: failed");
+        }
+    }
+
+    public boolean isAttending(int pos) {
+        try {
+            JSONObject obj = data.getJSONObject(pos).getJSONObject("Actions").getJSONObject("Participants");
+            return obj.getBoolean("status");
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void setAttending(int pos, boolean value) {
+        try {
+            JSONObject obj = data.getJSONObject(pos).getJSONObject("Actions").getJSONObject("Participants");
+            obj.put("status", value);
+        } catch (Exception e) {
+            Log.d(TAG, "setAttending: failed");
+        }
+    }
+
+    public Bitmap getImage(int position) {
+        try {
+            JSONObject jsonObject1 = data.getJSONObject(position);
             String image = jsonObject1.getString("image");
             byte[] decodedString = Base64.decode(image.substring(image.lastIndexOf(',') + 1), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -128,4 +180,18 @@ public class EventJsonHandler {
         }
     }
 
+    public boolean isAllowedPagination() {
+        return allowPagination;
+    }
+
+    public int getId(int pos) {
+        try {
+            JSONObject obj = data.getJSONObject(pos);
+            return obj.getInt("id");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
 }

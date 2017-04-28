@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import in.exun.campusbox.R;
+import in.exun.campusbox.activity.MainActivity;
 import in.exun.campusbox.adapters.EventAdapter;
 import in.exun.campusbox.jsonHandlers.EventJsonHandler;
 
@@ -98,9 +99,9 @@ public class Events extends Fragment {
         ) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTA3MTM4NzgsImV4cCI6MTQ5MzMwNTg3OCwianRpIjoiNDVuSW13bDZOQkpCcjJETlV2b1BoNyIsInVzZXJuYW1lIjoiY2hhd2xhYWRpdHlhOCIsImNvbGxlZ2VfaWQiOjF9.BF3KyogbSyBN0fY5VwBwgX88z4NIePTqleI9Y7dOLTg");
+                params.put("Authorization", token);
 
                 return params;
             }
@@ -111,7 +112,7 @@ public class Events extends Fragment {
     public void requestWithSomeHttpHeaders() {
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        String url = "http://app.campusbox.org/api/public/events?limit=2&offset=0";
+        String url = "http://app.campusbox.org/api/public/events?limit=4&offset=0";
         StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -139,9 +140,9 @@ public class Events extends Fragment {
         ) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<String, String>();String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTA3MTM4NzgsImV4cCI6MTQ5MzMwNTg3OCwianRpIjoiNDVuSW13bDZOQkpCcjJETlV2b1BoNyIsInVzZXJuYW1lIjoiY2hhd2xhYWRpdHlhOCIsImNvbGxlZ2VfaWQiOjF9.BF3KyogbSyBN0fY5VwBwgX88z4NIePTqleI9Y7dOLTg");
+                params.put("Authorization", token);
 
                 return params;
             }

@@ -27,10 +27,10 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
 
-                if (session.hasLoggedIn().equals("-1")){
+                if (session.getLoginToken().equals("-1")){
                     startActivity(new Intent(Splash.this,Login.class));
                 } else {
-                    startActivity(new Intent(Splash.this,MainActivity.class).putExtra(AppConstants.TAG_TOKEN,session.hasLoggedIn()));
+                    startActivity(new Intent(Splash.this,MainActivity.class).putExtra(AppConstants.TAG_TOKEN,session.getLoginToken()));
                 }
 
                 finish();

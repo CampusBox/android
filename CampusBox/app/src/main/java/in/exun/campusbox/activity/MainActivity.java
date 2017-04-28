@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void displayView(int index, boolean allow) {
+    public void displayView(int index, boolean allow) {
         fragment = new Fragment();
 
         if (index != currIndex) {

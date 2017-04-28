@@ -11,7 +11,7 @@ import android.util.Log;
 public class SessionManager {
     // Shared preferences file name
     private static final String PREF_LOGIN = "AndroidConstants";
-    private static final String KEY_LOGIN = "hasLoggedIn";
+    private static final String KEY_LOGIN = "getLoginToken";
 
     // LogCat tag
     private static String TAG = SessionManager.class.getSimpleName();
@@ -48,7 +48,7 @@ public class SessionManager {
             token = -1  : Logged out
             token = "_some_string_"  : Logged in
      */
-    public String hasLoggedIn(){
+    public String getLoginToken(){
         return pref.getString(KEY_LOGIN, "-1");
     }
 }

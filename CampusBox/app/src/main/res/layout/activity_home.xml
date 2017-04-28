@@ -31,10 +31,6 @@
         android:layout_marginTop="352dp"
         android:visibility="gone">
 
-        <include layout="@layout/login_sequence">
-
-        </include>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

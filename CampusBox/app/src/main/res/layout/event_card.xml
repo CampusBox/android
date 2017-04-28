@@ -1,189 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
-
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
-        android:id="@+id/filter"
-        android:visibility="gone"
-        android:layout_gravity="top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="0dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_filter_list_black_24dp"/>
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="28dp"
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filters"
-            android:textSize="15sp"/>
-    </RelativeLayout>
-    <android.support.v7.widget.CardView
     android:layout_width="match_parent"
-    android:layout_margin="4dp"
-    android:id="@+id/eventCard"
-        app:cardElevation="1dp"
-       android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/eventCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="3dp">
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4">
-            <ImageView
-                android:paddingTop="24dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="0dp"
-                android:contentDescription="Logo/Poster"
-                android:id="@+id/event_image"
-                android:layout_weight="1.3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_launcher" />
-
-            <RelativeLayout
-                android:layout_weight="2.7"
-                android:layout_width="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_height="match_parent">
-
-
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="8dp"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="16dp"
-                    android:paddingTop="16dp"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    tools:text="date" />
-
-                <TextView
-                    android:id="@+id/event_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/date"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textSize="32sp"
-                    tools:text="Event Name" />
-
-                <TextView
-                    android:id="@+id/event_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/event_name"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:textStyle="bold"
-                    android:lineSpacingExtra="5dp"
-                    android:textSize="14sp"
-
-                    tools:text="ClashHacks is one of the biggest student-run hackathon, covering both software and hardware." />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Venue"
-                    android:gravity="center"
-                    android:id="@+id/venue"
-                    android:textSize="16sp"
-                    android:layout_below="@+id/event_desc"
-                    android:layout_marginTop="16dp"/>
-            </RelativeLayout>
-        </LinearLayout>
-        <View
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/venue"
-            android:background="#ececec"/>
-        <LinearLayout
-            android:gravity="end"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:gravity="end"
-                android:id="@+id/Appreciated"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingEnd="8dp"
-                android:layout_gravity="center_vertical"
-                android:paddingTop="16dp">
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:weightSum="4">
+
                 <ImageView
-                    android:contentDescription="notheart"
-                    android:id="@+id/Appreciated_image"
-                    android:layout_gravity="center"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/notheart" />
+                    android:id="@+id/event_image"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="4dp"
-                    android:textColor="#ff007e"
-                    android:text="Appreciated" />
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/event_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="Event Name" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="date" />
+
+                    <TextView
+                        android:id="@+id/event_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:ellipsize="end"
+                        android:maxLines="3"
+                        android:minLines="1"
+                        android:textSize="14sp"
+                        tools:text="ClashHacks is one of the biggest student-run hackathon, covering both software and hardware. " />
+
+                </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/venue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_location"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:textSize="14sp"
+                tools:text="Venue" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="3dp"
+                android:background="#ececec" />
+
+            <!--Bottom button sheet-->
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-                android:id="@+id/Attending"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                android:layout_below="@+id/venue"
-                android:layout_toEndOf="@+id/Appreciated"
-                android:paddingBottom="8dp"
-                android:gravity="end"
-                android:paddingTop="12dp">
-
-                <ImageView
-                    android:layout_gravity="center"
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/Attending_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/attending" />
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/btn_like"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                     android:padding="8dp"
-                    android:textColor="#06558f"
-                    android:paddingEnd="16dp"
-                    android:text="Attending" />
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/Appreciated_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="heart"
+                        app:srcCompat="@drawable/ic_appreciate" />
+
+                    <TextView
+                        android:id="@+id/text_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="4dp"
+                        android:text="Appreciated"
+                        android:textColor="#ff007e" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginTop="3dp"
+                    android:background="#ececec" />
+
+                <LinearLayout
+                    android:id="@+id/btn_rsvp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:id="@+id/container_attending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_attend" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Attending"
+                            android:textColor="#06558f" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/container_rsvp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@color/colorPrimary"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/ic_plus_one" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="RSVP"
+                            android:textColor="#fff" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-    </LinearLayout>
 
 
- </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

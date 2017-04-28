@@ -1,78 +1,238 @@
 package in.exun.campusbox.fragments.Main;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import in.exun.campusbox.R;
+import in.exun.campusbox.activity.MainActivity;
+import in.exun.campusbox.activity.SingleEvent;
+import in.exun.campusbox.activity.SinglePost;
+import in.exun.campusbox.adapters.CreativeAdapter;
+import in.exun.campusbox.adapters.EventAdapter;
+import in.exun.campusbox.helper.AppConstants;
+import in.exun.campusbox.helper.AppController;
+import in.exun.campusbox.jsonHandlers.CreativeJsonHandler;
+import in.exun.campusbox.jsonHandlers.EventJsonHandler;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Anurag145 on 4/2/2017.
  */
 
 public class Home extends Fragment {
-    private Context context;
 
-    String s = "<p>Soch se farq padta hai...</p><p><br></p><p>Koi barish fragment_profile hansta hai</p><p>Koi barish fragment_profile rota hai</p><p>Koi dhup se dar ke bhaage</p><p>Koi dhup fragment_profile tan tapata hai</p><p><br></p><p> </p><p><span style=\"letter-spacing: 0.02em;\">Kisi ki jaan paise fragment_profile</span><br></p><p>Koi paise se marta hai</p><p>Udhta panchi aaram chahe</p><p>Chalne wale ko udhna hai</p><p> </p><p><br></p><p> </p><p>Kaam chahe ghar baetha naujawan</p><p>Chutti ko kaam waala tarasta hai</p><p><span style=\"letter-spacing: 0.02em;\">Koi nafrat faelata duniya fragment_profile</span><br></p><p>Koi sirf prem par jeeta hai</p><p><br></p><p> </p><p>Soch se farq padta hai...</p>";
-    StringTokenizer stringTokenizer = new StringTokenizer(s, "</p>");
+    private static final String TAG = "Home";
+    private static final int PART_EVENTS = 10;
+    private static final int PART_CREATIVITY = 11;
 
-    public Home() {
+    private View rootView;
+    private RecyclerView mRVEvents, mRVContents;
+    private LinearLayout contWaitEvents, contWaitCreative;
+    private CardView btnMoreEvents, btnMoreCreative;
+    private FloatingActionsMenu fabMenu;
+    private FloatingActionButton fabAddEvent, fabAddCreative, fabAddUpdate;
 
-    }
-
-    public static Home newInstance() {
-        return new Home();
-    }
+    EventJsonHandler mEventJsonHandler;
+    CreativeJsonHandler mCreativeJsonHandler;
+    private RecyclerView.Adapter mAdapterEvents,mAdapterCreative;
+    private RecyclerView.LayoutManager mLayoutManagerEvents,mLayoutManagerCreative;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d("message", "layout should inflate");
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        WebView webView = (WebView) view.findViewById(R.id.creativity_desc);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadData("<!DOCTYPE html> <html><head></head><body>" + s + "+</body></html>", "text/html; charset=utf-8", "UTF-8");
-        context = getContext();
-        //requestWithSomeHttpHeaders();
-        return view;
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        initialise();
+
+        populateEvents();
+        populateCreative();
+
+        return rootView;
     }
 
-    public void requestWithSomeHttpHeaders() {
-        RequestQueue queue = Volley.newRequestQueue(context);
-        String url = "https://app.campusbox.org/api/public/contents?limit=4&offset=0";
+    private void initialise() {
+
+        contWaitCreative = (LinearLayout) rootView.findViewById(R.id.container_creative_wait);
+        contWaitEvents = (LinearLayout) rootView.findViewById(R.id.container_event_wait);
+        btnMoreEvents = (CardView) rootView.findViewById(R.id.btn_see_all_events);
+        btnMoreCreative = (CardView) rootView.findViewById(R.id.btn_see_all_creative);
+        fabMenu = (FloatingActionsMenu) rootView.findViewById(R.id.fab_menu);
+        fabAddCreative = (FloatingActionButton) rootView.findViewById(R.id.fab_home_add_creativity);
+        fabAddEvent = (FloatingActionButton) rootView.findViewById(R.id.fab_home_add_event);
+        fabAddUpdate = (FloatingActionButton) rootView.findViewById(R.id.fab_home_add_profile);
+
+        btnMoreEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).displayView(1,true);
+            }
+        });
+
+        btnMoreCreative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).displayView(3,true);
+            }
+        });
+
+        fabAddUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Add update", Toast.LENGTH_SHORT).show();
+                fabMenu.collapse();
+            }
+        });
+
+        fabAddEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Add event", Toast.LENGTH_SHORT).show();
+                fabMenu.collapse();
+            }
+        });
+
+        fabAddCreative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Add post", Toast.LENGTH_SHORT).show();
+                fabMenu.collapse();
+            }
+        });
+    }
+
+    private void populateEvents() {
+
+        mRVEvents = (RecyclerView) rootView.findViewById(R.id.rv_events);
+        mRVEvents.setNestedScrollingEnabled(false);
+        mLayoutManagerEvents = new LinearLayoutManager(getApplicationContext());
+        mRVEvents.setLayoutManager(mLayoutManagerEvents);
+        mAdapterEvents = new EventAdapter();
+        mRVEvents.setAdapter(mAdapterEvents);
+
+        fetchEvents();
+    }
+
+    private void populateCreative() {
+
+        mRVContents = (RecyclerView) rootView.findViewById(R.id.rv_creative);
+        mRVContents.setNestedScrollingEnabled(false);
+        mLayoutManagerCreative = new LinearLayoutManager(getApplicationContext());
+        mRVContents.setLayoutManager(mLayoutManagerCreative);
+        mAdapterCreative = new CreativeAdapter();
+        mRVContents.setAdapter(mAdapterCreative);
+
+        fetchCreative();
+    }
+
+    public void fetchEvents() {
+
+        updateUI(AppConstants.PROCESS_LOAD,PART_EVENTS);
+
+        StringRequest postRequest = new StringRequest(Request.Method.GET, AppConstants.URL_DASH_EVENTS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject resp = new JSONObject(response);
+                            if (resp.has("data")) {
+                                JSONArray data = resp.getJSONArray("data");
+                                if (data.length() > 0) {
+                                    mEventJsonHandler = new EventJsonHandler(data, null); //Sending null because we don't need pagination here
+                                    mAdapterEvents = new EventAdapter(mEventJsonHandler, mEventJsonHandler.Length());
+                                    mRVEvents.setAdapter(mAdapterEvents);
+                                    updateUI(AppConstants.PROCESS_SUCCESS, PART_EVENTS);
+                                } else {
+                                    updateUI(AppConstants.PROCESS_FAILURE, PART_EVENTS);
+                                }
+                            } else {
+                                updateUI(AppConstants.PROCESS_FAILURE, PART_EVENTS);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            updateUI(AppConstants.PROCESS_FAILURE, PART_EVENTS);
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        updateUI(AppConstants.PROCESS_FAILURE, PART_EVENTS);
+                        Log.d("ERROR", "error => " + error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", token);
+
+                return params;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(postRequest, TAG);
+
+    }
+
+    public void fetchCreative() {
+
+        updateUI(AppConstants.PROCESS_LOAD,PART_CREATIVITY);
+        String url =  AppConstants.URL_DASH_CONTENTS + "?limit=4&offset=0";
+
         StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // response
-                        Log.e("Response", response);
-                        int scrollpostion = 0;
-                       /* mLayoutManager=new GridLayoutManager(getActivity(),1);
-                        mRecyclerView.setLayoutManager(mLayoutManager);
-                        mRecyclerView.scrollToPosition(0);
-                        EventJsonHandler mEventJsonHandler=new EventJsonHandler(response);
-                        EventAdapter ob = new EventAdapter( mEventJsonHandler,mEventJsonHandler.Length());
-                        mRecyclerView.setAdapter(ob);
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                        */
-
+                        try {
+                            JSONObject resp = new JSONObject(response);
+                            if (resp.has("data")) {
+                                JSONArray data = resp.getJSONArray("data");
+                                if (data.length() > 0) {
+                                    mCreativeJsonHandler = new CreativeJsonHandler(data, null); //Sending null because we don't need pagination here
+                                    mAdapterCreative = new CreativeAdapter(getActivity(),mCreativeJsonHandler, data.length());
+                                    mRVContents.setAdapter(mAdapterCreative);
+                                    updateUI(AppConstants.PROCESS_SUCCESS, PART_CREATIVITY);
+                                } else {
+                                    updateUI(AppConstants.PROCESS_FAILURE, PART_CREATIVITY);
+                                }
+                            } else {
+                                updateUI(AppConstants.PROCESS_FAILURE, PART_CREATIVITY);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            updateUI(AppConstants.PROCESS_FAILURE, PART_CREATIVITY);
+                        }
 
                     }
                 },
@@ -87,14 +247,122 @@ public class Home extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
+                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTA3MTM4NzgsImV4cCI6MTQ5MzMwNTg3OCwianRpIjoiNDVuSW13bDZOQkpCcjJETlV2b1BoNyIsInVzZXJuYW1lIjoiY2hhd2xhYWRpdHlhOCIsImNvbGxlZ2VfaWQiOjF9.BF3KyogbSyBN0fY5VwBwgX88z4NIePTqleI9Y7dOLTg");
+                params.put("Authorization", token);
 
                 return params;
             }
         };
 
-        queue.add(postRequest);
+        AppController.getInstance().addToRequestQueue(postRequest, TAG);
+    }
 
+    private void updateUI(int reqCode, int partCode) {
+
+        switch (reqCode) {
+            case AppConstants.PROCESS_SUCCESS:
+                if (partCode == PART_EVENTS) {
+                    mRVEvents.setVisibility(View.VISIBLE);
+                    btnMoreEvents.setVisibility(View.VISIBLE);
+                    contWaitEvents.setVisibility(View.GONE);
+                } else {
+                    mRVContents.setVisibility(View.VISIBLE);
+                    btnMoreCreative.setVisibility(View.VISIBLE);
+                    contWaitCreative.setVisibility(View.GONE);
+                }
+                fabMenu.setVisibility(View.VISIBLE);
+                break;
+            case AppConstants.PROCESS_FAILURE:
+                Toast.makeText(getActivity(), "Error in internet", Toast.LENGTH_SHORT).show();
+                fabMenu.setVisibility(View.GONE);
+                break;
+            case AppConstants.PROCESS_LOAD:
+                if (partCode == PART_EVENTS) {
+                    mRVEvents.setVisibility(View.GONE);
+                    btnMoreEvents.setVisibility(View.GONE);
+                    contWaitEvents.setVisibility(View.VISIBLE);
+                } else {
+                    mRVContents.setVisibility(View.GONE);
+                    btnMoreCreative.setVisibility(View.GONE);
+                    contWaitCreative.setVisibility(View.VISIBLE);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ((EventAdapter) mAdapterEvents).setOnItemClickListener(new EventAdapter.MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v, int type) {
+
+                switch (type) {
+                    case 0:
+                        Intent i = new Intent(getActivity(),SingleEvent.class);
+                        i.putExtra(AppConstants.TAG_OBJ,mEventJsonHandler.getJsonArray(position));
+                        startActivity(i);
+                        break;
+                    case 1:
+                        sendOneWyRequest(AppConstants.URL_APPRECIATE_EVENT + mEventJsonHandler.getId(position));
+                        break;
+                    case 2:
+                        sendOneWyRequest(AppConstants.URL_ATTEND + mEventJsonHandler.getId(position));
+                        break;
+                }
+            }
+        });
+
+        ((CreativeAdapter) mAdapterCreative).setOnItemClickListener(new CreativeAdapter.MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v, int type) {
+                switch (type) {
+                    case 0:
+                        Intent i = new Intent(getActivity(),SinglePost.class);
+                        i.putExtra(AppConstants.TAG_OBJ,mCreativeJsonHandler.getJsonArray(position));
+                        startActivity(i);
+                        break;
+                    case 1:
+                        sendOneWyRequest(AppConstants.URL_APPRECIATE_POST + mCreativeJsonHandler.getId(position));
+                        break;
+                    case 2:
+                        sendOneWyRequest(AppConstants.URL_BOOKMARK + mCreativeJsonHandler.getId(position));
+                        break;
+                }
+            }
+        });
+    }
+
+    private void sendOneWyRequest(String url) {
+        Log.d(TAG, "sendOneWyRequest: " + url);
+
+        StringRequest postRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d(TAG, "onResponse: " + response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("ERROR", "error => " + error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<String, String>();
+                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", token);
+
+                return params;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(postRequest, TAG);
     }
 }

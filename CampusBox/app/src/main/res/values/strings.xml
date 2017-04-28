@@ -4,7 +4,7 @@
     <string name="facebook_app_id">1250377088376164</string>
     <string name="fb_login_protocol_scheme">fb1250377088376164</string>
 
-    <string name="server_client_id" >702228530885-vi264d7g6v5ivbcmebjfpomr0hmliomd.apps.googleusercontent.com</string>
+    <string name="server_client_id">702228530885-vi264d7g6v5ivbcmebjfpomr0hmliomd.apps.googleusercontent.com</string>
 
     <string name="static_home_title">Select at least three topics to personalize \n your content stream</string>
     <string name="title_activity_main">MainActivity</string>
@@ -19,4 +19,6 @@
     <string name="menu_search">Search</string>
     <string name="menu_me">Me</string>
     <string name="menu_creativity">Creativity</string>
+    <string name="static_home_event_title">Events for you</string>
+    <string name="static_home_content_title">Creative works by other students</string>
 </resources>

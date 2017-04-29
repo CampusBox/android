@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import in.exun.campusbox.R;
-import in.exun.campusbox.activity.MainActivity;
 import in.exun.campusbox.activity.SingleEvent;
 import in.exun.campusbox.adapters.RVAEvents;
 import in.exun.campusbox.helper.AppConstants;
@@ -276,6 +275,7 @@ public class Events extends Fragment {
             @Override
             public void onItemClick(int position, View v, int type) {
 
+                Log.d(TAG, "onItemClick: " + position);
                 switch (type) {
                     case 0:
                         try {

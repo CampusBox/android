@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import in.exun.campusbox.R;
 import in.exun.campusbox.jsonHandlers.EventJsonHandler;
 
@@ -42,12 +40,10 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         prevCount = this.mEventJsonHandler.Length();
         this.mEventJsonHandler = mEventJsonHandler;
         notifyItemInserted(prevCount + 2);
-        Log.d(TAG, "updateHandler: " + getItemCount() + " from " + (prevCount + 2));
     }
 
     public RVAEvents(EventJsonHandler mEventJsonHandler) {
         this.mEventJsonHandler = mEventJsonHandler;
-        Log.d(TAG, "RVAEvents: " + getItemCount() + " " + flag);
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
@@ -57,8 +53,6 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void removeEnd() {
         paging = false;
         notifyItemRemoved(getItemCount()-1);
-//        notifyItemRangeChanged(0,getItemCount()-1);
-        Log.d(TAG, "removeEnd: ");
 
     }
 
@@ -120,8 +114,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            Log.e("Anurag2",String.valueOf(v.getId()));
-            myClickListener.onItemClick(getAdapterPosition(), v, 0);
+            myClickListener.onItemClick(getAdapterPosition() - 1, v, 0);
         }
     }
 
@@ -150,7 +143,6 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             //cast holder to VHHeader and set data for header.
             final ViewHolder holder = (ViewHolder) holderB;
             final int counter = holder.getAdapterPosition() - 1;
-            Log.d(TAG, "onBindViewHolder: " + counter);
 
             try {
                 holder.textDate.setText(mEventJsonHandler.getDate(counter));
@@ -218,26 +210,20 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (counter == getItemCount() - 2 && paging) {
                 flag = true;
                 prevCount = counter;
-                Log.d(TAG, "onBindViewHolder: Loaded all available data, prevCount = " + counter);
-            } else {
-                Log.d(TAG, "onBindViewHolder: " + counter + " != " + (getItemCount() - 2));
             }
         } else if (holderB instanceof FooterViewHolder) {
             if (!flag) {
                 flag = true;
                 prevCount = getItemCount() - 3;
-                Log.d(TAG, "onBindViewHolder: flagged it positive");
             }
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        Log.d(TAG, "getItemViewType: " + position);
         if (isPositionHeader(position))
             return TYPE_HEADER;
         else if (isPositionFooter(position) && paging) {
-            Log.d(TAG, "getItemViewType: isFooter" + position + flag);
             return TYPE_FOOTER;
         }
 

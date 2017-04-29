@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import in.exun.campusbox.R;
+import in.exun.campusbox.activity.MainActivity;
 import in.exun.campusbox.activity.SingleEvent;
 import in.exun.campusbox.adapters.RVAEvents;
 import in.exun.campusbox.helper.AppConstants;
@@ -141,9 +142,9 @@ public class Events extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-               // String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+               String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTE1OTE4NjUsImV4cCI6MTQ5NDE4Mzg2NSwianRpIjoiMTB6WkF5cmk3MzA2TkZnYmtKM0VrZyIsInVzZXJuYW1lIjoiYW51cmFnMTQ1IiwiY29sbGVnZV9pZCI6MX0.YGSpRu6bPUtiNWOExQ_za-OjkKgi_uVIaikDuQXM_cY");
+                params.put("Authorization", token);
 
                 return params;
             }
@@ -197,9 +198,9 @@ public class Events extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-                //String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTE1OTE4NjUsImV4cCI6MTQ5NDE4Mzg2NSwianRpIjoiMTB6WkF5cmk3MzA2TkZnYmtKM0VrZyIsInVzZXJuYW1lIjoiYW51cmFnMTQ1IiwiY29sbGVnZV9pZCI6MX0.YGSpRu6bPUtiNWOExQ_za-OjkKgi_uVIaikDuQXM_cY");
+                params.put("Authorization", token);
 
                 return params;
             }
@@ -330,10 +331,9 @@ public class Events extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-              //  String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTE1OTE4NjUsImV4cCI6MTQ5NDE4Mzg2NSwianRpIjoiMTB6WkF5cmk3MzA2TkZnYmtKM0VrZyIsInVzZXJuYW1lIjoiYW51cmFnMTQ1IiwiY29sbGVnZV9pZCI6MX0.YGSpRu6bPUtiNWOExQ_za-OjkKgi_uVIaikDuQXM_cY");
-
+                params.put("Authorization",token);
                 return params;
             }
         };

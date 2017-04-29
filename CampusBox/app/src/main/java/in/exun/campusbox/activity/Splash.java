@@ -28,9 +28,9 @@ public class Splash extends AppCompatActivity {
             public void run() {
 
                 if (session.getLoginToken().equals("-1")){
-                    startActivity(new Intent(Splash.this,MainActivity.class).putExtra(AppConstants.TAG_TOKEN,session.getLoginToken()));
+                  //  startActivity(new Intent(Splash.this,MainActivity.class).putExtra(AppConstants.TAG_TOKEN,session.getLoginToken()));
 
-                    // startActivity(new Intent(Splash.this,Login.class));
+                    startActivity(new Intent(Splash.this,Login.class));
                 } else {
                     startActivity(new Intent(Splash.this,MainActivity.class).putExtra(AppConstants.TAG_TOKEN,session.getLoginToken()));
                 }

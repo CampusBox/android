@@ -21,10 +21,12 @@ public class AppConstants {
     public static final String URL_EVENTS = "http://app.campusbox.org/api/public/events?";
     public static final String URL_CREATIVE = "https://app.campusbox.org/api/public/contents?";
     public static final String URL_SINGLE_EVENT="https://app.campusbox.org/api/public/event/";
+    public static final String URL_PROFILE="https://app.campusbox.org/api/public/myProfile";
     public static final int PROCESS_SUCCESS = 0;
     public static final int PROCESS_FAILURE = 1;
     public static final int PROCESS_LOAD = 2;
     public static final int PROCESS_LOAD_MORE = 3;
+
 
     public static final String[] interests = {
             "Articles", "Poetry", "Drama", "Paint and Colour", "Drawing", "Sewing and Fabric",

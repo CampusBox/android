@@ -54,10 +54,14 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SingleEvent"
+        <activity
+            android:name=".activity.SingleEvent"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.SinglePost"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activity.SinglePost"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.MyProfile"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

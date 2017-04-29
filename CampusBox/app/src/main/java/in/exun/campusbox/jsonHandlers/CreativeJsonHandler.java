@@ -25,45 +25,33 @@ import in.exun.campusbox.helper.AppConstants;
 public class CreativeJsonHandler {
 
     private static final String TAG = "CreativeJsonHandler";
-    private int n = 0;
+    private int n = 0, offset, limit;
     private JSONArray data;
-    private JSONObject metadata;
     private boolean allowPagination = true;
-
-    public CreativeJsonHandler(String myjson) {
-        try {
-            JSONObject jsonObject = new JSONObject(myjson);
-            metadata = jsonObject.getJSONObject("meta");
-            data = jsonObject.getJSONArray("data");
-            allowPagination = true;
-            n = data.length();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String getJsonArray(int pos){
-        try {
-            JSONArray array = new JSONArray();
-            return array.put(data.getJSONObject(pos)).toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     public CreativeJsonHandler(JSONArray data, JSONObject metadata) {
         this.data = data;
-        this.metadata = metadata;
         if (metadata == null) {
+            Log.d("EventJsonHandler: ", "No pagination req");
             allowPagination = false;
+        } else {
+            try {
+                limit = Integer.parseInt(metadata.getString("limit"));
+                offset = metadata.getInt("offset");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         n = data.length();
     }
 
+    public JSONArray getData() {
+        return data;
+    }
+
     public String urlPagination() {
         try {
-            return "limit=" + metadata.getString("limit") + "&offset=" + metadata.getString("offset");
+            return "limit=" + limit + "&offset=" + offset;
         } catch (Exception e) {
             e.printStackTrace();
             return "limit=6&offset=0";
@@ -230,5 +218,13 @@ public class CreativeJsonHandler {
                     .append(arr[i].substring(1)).append(" ");
         }
         return sb.toString().trim();
+    }
+
+    public int length() {
+        return data.length();
+    }
+
+    public int getLimit() {
+        return limit;
     }
 }

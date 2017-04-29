@@ -32,7 +32,7 @@ import in.exun.campusbox.R;
 import in.exun.campusbox.activity.MainActivity;
 import in.exun.campusbox.activity.SingleEvent;
 import in.exun.campusbox.activity.SinglePost;
-import in.exun.campusbox.adapters.CreativeAdapter;
+import in.exun.campusbox.adapters.RVACreativeHome;
 import in.exun.campusbox.adapters.RVAEventsHome;
 import in.exun.campusbox.helper.AppConstants;
 import in.exun.campusbox.helper.AppController;
@@ -144,7 +144,7 @@ public class Home extends Fragment {
         mRVContents.setNestedScrollingEnabled(false);
         mLayoutManagerCreative = new LinearLayoutManager(getApplicationContext());
         mRVContents.setLayoutManager(mLayoutManagerCreative);
-        mAdapterCreative = new CreativeAdapter();
+        mAdapterCreative = new RVACreativeHome();
         mRVContents.setAdapter(mAdapterCreative);
 
         fetchCreative();
@@ -220,7 +220,7 @@ public class Home extends Fragment {
                                 JSONArray data = resp.getJSONArray("data");
                                 if (data.length() > 0) {
                                     mCreativeJsonHandler = new CreativeJsonHandler(data, null); //Sending null because we don't need pagination here
-                                    mAdapterCreative = new CreativeAdapter(getActivity(), mCreativeJsonHandler, data.length());
+                                    mAdapterCreative = new RVACreativeHome(getActivity(), mCreativeJsonHandler, data.length());
                                     mRVContents.setAdapter(mAdapterCreative);
                                     updateUI(AppConstants.PROCESS_SUCCESS, PART_CREATIVITY);
                                 } else {
@@ -326,7 +326,7 @@ public class Home extends Fragment {
             }
         });
 
-        ((CreativeAdapter) mAdapterCreative).setOnItemClickListener(new CreativeAdapter.MyClickListener() {
+        ((RVACreativeHome) mAdapterCreative).setOnItemClickListener(new RVACreativeHome.MyClickListener() {
             @Override
             public void onItemClick(int position, View v, int type) {
                 switch (type) {

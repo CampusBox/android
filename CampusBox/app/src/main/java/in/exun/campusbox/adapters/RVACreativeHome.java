@@ -21,8 +21,8 @@ import in.exun.campusbox.jsonHandlers.CreativeJsonHandler;
  * Created by Anurag145 on 4/8/2017.
  */
 
-public class CreativeAdapter extends RecyclerView.Adapter<CreativeAdapter.ViewHolder> {
-    private static final String TAG = "CreativeAdapter";
+public class RVACreativeHome extends RecyclerView.Adapter<RVACreativeHome.ViewHolder> {
+    private static final String TAG = "RVACreativeHome";
     private CreativeJsonHandler mCreativeJsonHandler;
     private static MyClickListener myClickListener;
     private int count;
@@ -30,21 +30,21 @@ public class CreativeAdapter extends RecyclerView.Adapter<CreativeAdapter.ViewHo
     private boolean flag = false;
     private Context context;
 
-    public CreativeAdapter() {
+    public RVACreativeHome() {
     }
 
     public void setmEventJsonHandler(CreativeJsonHandler mCreativeJsonHandler) {
         this.mCreativeJsonHandler = mCreativeJsonHandler;
     }
 
-    public CreativeAdapter(Context context, CreativeJsonHandler mEventJsonHandler, int count) {
+    public RVACreativeHome(Context context, CreativeJsonHandler mEventJsonHandler, int count) {
         this.context = context;
         this.mCreativeJsonHandler = mEventJsonHandler;
         this.count = count;
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
-        CreativeAdapter.myClickListener = myClickListener;
+        RVACreativeHome.myClickListener = myClickListener;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder

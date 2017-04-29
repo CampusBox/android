@@ -15,13 +15,7 @@ import in.exun.campusbox.R;
  */
 
 public class Search extends Fragment {
-    public Search()
-    {
 
-    }
-    public static Search newInstance() {
-        return new Search();
-    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

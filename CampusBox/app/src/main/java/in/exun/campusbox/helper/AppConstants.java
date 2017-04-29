@@ -19,6 +19,7 @@ public class AppConstants {
     public static final String URL_BOOKMARK = "https://app.campusbox.org/api/public/bookmarkContent/";
     public static final String URL_APPRECIATE_POST = "https://app.campusbox.org/api/public/appreciateContent/";
     public static final String URL_EVENTS = "http://app.campusbox.org/api/public/events?";
+    public static final String URL_CREATIVE = "https://app.campusbox.org/api/public/contents?";
     public static final String URL_SINGLE_EVENT="https://app.campusbox.org/api/public/event/";
     public static final int PROCESS_SUCCESS = 0;
     public static final int PROCESS_FAILURE = 1;

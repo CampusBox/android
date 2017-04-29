@@ -118,6 +118,8 @@ public class EventJsonHandler {
         return n;
     }
 
+
+
     public String getTitle(int position) {
         try {
             JSONObject jsonObject1 = data.getJSONObject(position);

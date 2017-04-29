@@ -1,6 +1,7 @@
 package in.exun.campusbox.adapters;
 
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import in.exun.campusbox.R;
 import in.exun.campusbox.jsonHandlers.EventJsonHandler;
@@ -91,7 +94,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
-
+        private CardView cardView;
         private ImageView imgLike;
         private ImageView imgEvent;
         private TextView textDate, textTitle, textVenue, textDesc, textLike;
@@ -99,6 +102,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         ViewHolder(View view) {
             super(view);
+            cardView=(CardView)view.findViewById(R.id.eventCard);
             imgLike = (ImageView) view.findViewById(R.id.Appreciated_image);
             textDate = (TextView) view.findViewById(R.id.date);
             textTitle = (TextView) view.findViewById(R.id.event_name);
@@ -111,12 +115,13 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             optRSVP = (LinearLayout) view.findViewById(R.id.container_rsvp);
             optAttending = (LinearLayout) view.findViewById(R.id.container_attending);
 
-            itemView.setOnClickListener(this);
+            cardView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), itemView, 0);
+            Log.e("Anurag2",String.valueOf(v.getId()));
+            myClickListener.onItemClick(getAdapterPosition(), v, 0);
         }
     }
 
@@ -181,7 +186,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         holder.optRSVP.setVisibility(View.GONE);
                         mEventJsonHandler.setAttending(counter, true);
                     }
-                    myClickListener.onItemClick(counter, view, 2);
+                    myClickListener.onItemClick(counter,view, 2);
                 }
             });
 
@@ -201,7 +206,10 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 holder.imgLike.setImageResource(R.drawable.ic_appreciate_empty);
                 holder.textLike.setText("Appreciate");
             }
+            Log.e("Tag",String.valueOf(counter));
+            Log.e("Tag", String.valueOf( holder.cardView.getId()));
 
+            holder.cardView.setContentDescription(String.valueOf(mEventJsonHandler.getId(counter)));
             holder.textVenue.setText(mEventJsonHandler.getVenue(counter));
             holder.textDesc.setText(mEventJsonHandler.getDesc(counter));
             holder.textTitle.setText(mEventJsonHandler.getTitle(counter));

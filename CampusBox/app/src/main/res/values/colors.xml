@@ -11,5 +11,6 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="colorAppreciate">#DE0052</color>
     <color name="colorBookmarks">#9E9E9E</color>
+    <color name="textbackgroundcolor">#000000</color>
 
 </resources>

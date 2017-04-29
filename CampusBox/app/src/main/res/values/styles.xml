@@ -14,7 +14,9 @@
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
-
+ <style name="MyTextView" parent="@android:style/Widget.TextView">
+     <item name="android:background">@color/textbackgroundcolor</item>
+ </style>
     <!-- Button Design -->
     <style name="MyButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">@android:color/darker_gray</item>

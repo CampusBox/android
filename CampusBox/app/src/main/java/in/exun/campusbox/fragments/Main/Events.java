@@ -117,8 +117,7 @@ public class Events extends Fragment {
 
                             if (temp != 0) {
                                 mAdapter.updateHandler(mEventJsonHandler, temp);
-                                if (mEventJsonHandler.getLimit() != temp) {
-                                    maxLimitReached = true;
+                                if (mEventJsonHandler.getLimit() != temp) {maxLimitReached = true;
                                     Log.d(TAG, "onResponse: Data limit reached");
                                     mAdapter.removeEnd();
                                 }
@@ -143,9 +142,9 @@ public class Events extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+               // String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", token);
+                params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTE1OTE4NjUsImV4cCI6MTQ5NDE4Mzg2NSwianRpIjoiMTB6WkF5cmk3MzA2TkZnYmtKM0VrZyIsInVzZXJuYW1lIjoiYW51cmFnMTQ1IiwiY29sbGVnZV9pZCI6MX0.YGSpRu6bPUtiNWOExQ_za-OjkKgi_uVIaikDuQXM_cY");
 
                 return params;
             }
@@ -199,9 +198,9 @@ public class Events extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+                //String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", token);
+                params.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTE1OTE4NjUsImV4cCI6MTQ5NDE4Mzg2NSwianRpIjoiMTB6WkF5cmk3MzA2TkZnYmtKM0VrZyIsInVzZXJuYW1lIjoiYW51cmFnMTQ1IiwiY29sbGVnZV9pZCI6MX0.YGSpRu6bPUtiNWOExQ_za-OjkKgi_uVIaikDuQXM_cY");
 
                 return params;
             }
@@ -279,9 +278,16 @@ public class Events extends Fragment {
 
                 switch (type) {
                     case 0:
-                        Intent i = new Intent(getActivity(), SingleEvent.class);
-                        i.putExtra(AppConstants.TAG_OBJ, mEventJsonHandler.getSingleData(position));
-                        startActivity(i);
+                        try {
+                            Log.e("Anurag",String.valueOf(v.getId()));
+                            Intent i = new Intent(getActivity(), SingleEvent.class);
+                            i.putExtra(AppConstants.TAG_OBJ, v.getContentDescription());
+                            startActivity(i);
+                        }catch (Exception e)
+
+                        {
+                            Log.e("Tag",e.toString());
+                        }
                         break;
                     case 1:
                         sendOneWyRequest(AppConstants.URL_APPRECIATE_EVENT + mEventJsonHandler.getId(position));
@@ -317,9 +323,9 @@ public class Events extends Fragment {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-                String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
+              //  String token = "Bearer " + ((MainActivity) getActivity()).session.getLoginToken();
                 params.put("Content-Type", "application/json");
-                params.put("Authorization", token);
+                params.put("Authorization","Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0OTE1OTE4NjUsImV4cCI6MTQ5NDE4Mzg2NSwianRpIjoiMTB6WkF5cmk3MzA2TkZnYmtKM0VrZyIsInVzZXJuYW1lIjoiYW51cmFnMTQ1IiwiY29sbGVnZV9pZCI6MX0.YGSpRu6bPUtiNWOExQ_za-OjkKgi_uVIaikDuQXM_cY");
 
                 return params;
             }

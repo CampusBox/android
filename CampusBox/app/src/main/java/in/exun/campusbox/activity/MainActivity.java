@@ -17,6 +17,7 @@ import in.exun.campusbox.fragments.Main.Events;
 import in.exun.campusbox.fragments.Main.Home;
 import in.exun.campusbox.fragments.Main.Profile;
 import in.exun.campusbox.fragments.Main.Search;
+import in.exun.campusbox.helper.AppConstants;
 import in.exun.campusbox.helper.SessionManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,6 +35,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         initialise();
+        final Intent intent = getIntent();
+        final String action = intent.getAction();
+
+        if (Intent.ACTION_VIEW.equals(action)) {
+            String url = intent.getData().toString();
+            if (url.contains("/singleEvent/")){
+                int id = Integer.parseInt(url.substring(url.indexOf("Event/") + 6));
+                Log.d(TAG, "onCreate: Event "+ id) ;
+                Intent i = new Intent(this, SingleEvent.class);
+                i.putExtra(AppConstants.TAG_OBJ, id);
+                startActivity(i);
+            } else if (url.contains("/singleContent/")){
+                int id = Integer.parseInt(url.substring(url.indexOf("Content/") + 8));
+                Log.d(TAG, "onCreate: Creativity "+ id) ;
+                Intent i = new Intent(this, SinglePost.class);
+                i.putExtra(AppConstants.TAG_OBJ, id);
+                startActivity(i);
+            }
+
+        }
         setupBottomNav();
 
     }
@@ -68,23 +89,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (index) {
                 case 0:
                     fragment = new Home();
-                    setSelectedNav((LinearLayout)findViewById(R.id.nav_home));
+                    setSelectedNav((LinearLayout) findViewById(R.id.nav_home));
                     break;
                 case 1:
                     fragment = new Events();
-                    setSelectedNav((LinearLayout)findViewById(R.id.nav_event));
+                    setSelectedNav((LinearLayout) findViewById(R.id.nav_event));
                     break;
                 case 2:
                     fragment = new Search();
-                    setSelectedNav((LinearLayout)findViewById(R.id.nav_search));
+                    setSelectedNav((LinearLayout) findViewById(R.id.nav_search));
                     break;
                 case 3:
                     fragment = new Creativity();
-                    setSelectedNav((LinearLayout)findViewById(R.id.nav_creativity));
+                    setSelectedNav((LinearLayout) findViewById(R.id.nav_creativity));
                     break;
                 case 4:
                     fragment = new Profile();
-                    setSelectedNav((LinearLayout)findViewById(R.id.nav_me));
+                    setSelectedNav((LinearLayout) findViewById(R.id.nav_me));
                     break;
             }
 
@@ -144,17 +165,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setSelectedNav(View selectedNav) {
 
-        switch (currIndex){
+        switch (currIndex) {
             case 0:
-                ((LinearLayout)findViewById(R.id.nav_home)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((LinearLayout) findViewById(R.id.nav_home)).setBackgroundColor(Color.parseColor("#0570C0"));
             case 1:
-                ((LinearLayout)findViewById(R.id.nav_event)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((LinearLayout) findViewById(R.id.nav_event)).setBackgroundColor(Color.parseColor("#0570C0"));
             case 2:
-                ((LinearLayout)findViewById(R.id.nav_search)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((LinearLayout) findViewById(R.id.nav_search)).setBackgroundColor(Color.parseColor("#0570C0"));
             case 3:
-                ((LinearLayout)findViewById(R.id.nav_creativity)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((LinearLayout) findViewById(R.id.nav_creativity)).setBackgroundColor(Color.parseColor("#0570C0"));
             case 4:
-                ((LinearLayout)findViewById(R.id.nav_me)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((LinearLayout) findViewById(R.id.nav_me)).setBackgroundColor(Color.parseColor("#0570C0"));
         }
 
         selectedNav.setBackgroundColor(Color.parseColor("#06558F"));

@@ -315,6 +315,13 @@ public class Home extends Fragment {
                     case 2:
                         sendOneWyRequest(AppConstants.URL_ATTEND + mEventJsonHandler.getId(position));
                         break;
+                    case 3:
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, check out this event. https://app.campusbox.org/#!/singleEvent/" + mEventJsonHandler.getId(position));
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);
+                        break;
                 }
             }
         });
@@ -325,7 +332,7 @@ public class Home extends Fragment {
                 switch (type) {
                     case 0:
                         Intent i = new Intent(getActivity(), SinglePost.class);
-                        i.putExtra(AppConstants.TAG_OBJ, mCreativeJsonHandler.getJsonArray(position));
+                        i.putExtra(AppConstants.TAG_OBJ, mCreativeJsonHandler.getId(position));
                         startActivity(i);
                         break;
                     case 1:
@@ -333,6 +340,13 @@ public class Home extends Fragment {
                         break;
                     case 2:
                         sendOneWyRequest(AppConstants.URL_BOOKMARK + mCreativeJsonHandler.getId(position));
+                        break;
+                    case 3:
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, check out this post. https://app.campusbox.org/#!/singleContent/" + mCreativeJsonHandler.getId(position));
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);
                         break;
                 }
             }

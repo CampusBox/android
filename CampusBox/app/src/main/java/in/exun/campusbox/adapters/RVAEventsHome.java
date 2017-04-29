@@ -46,8 +46,7 @@ public class RVAEventsHome extends RecyclerView.Adapter<RVAEventsHome.ViewHolder
     static class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private ImageView imgLike;
-        private ImageView imgEvent;
+        private ImageView imgLike,imgEvent, btnShare;
         private TextView textDate, textTitle, textVenue, textDesc, textLike;
         private LinearLayout btnLike, btnRSVP, optRSVP, optAttending;
 
@@ -62,6 +61,7 @@ public class RVAEventsHome extends RecyclerView.Adapter<RVAEventsHome.ViewHolder
             imgEvent = (ImageView) view.findViewById(R.id.event_image);
             btnLike = (LinearLayout) view.findViewById(R.id.btn_like);
             btnRSVP = (LinearLayout) view.findViewById(R.id.btn_rsvp);
+            btnShare = (ImageView) view.findViewById(R.id.btn_share);
             optRSVP = (LinearLayout) view.findViewById(R.id.container_rsvp);
             optAttending = (LinearLayout) view.findViewById(R.id.container_attending);
 
@@ -125,6 +125,13 @@ public class RVAEventsHome extends RecyclerView.Adapter<RVAEventsHome.ViewHolder
                     mEventJsonHandler.setAttending(holder.getAdapterPosition(), true);
                 }
                 myClickListener.onItemClick(holder.getAdapterPosition(), view, 2);
+            }
+        });
+
+        holder.btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myClickListener.onItemClick(holder.getAdapterPosition(),v,3);
             }
         });
 

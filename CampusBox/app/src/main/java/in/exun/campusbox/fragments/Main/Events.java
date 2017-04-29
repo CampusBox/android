@@ -115,7 +115,7 @@ public class Events extends Fragment {
                             updateUI(AppConstants.PROCESS_SUCCESS);
 
                             if (temp != 0) {
-                                mAdapter.updateHandler(mEventJsonHandler, temp);
+                                mAdapter.updateHandler(mEventJsonHandler);
                                 if (mEventJsonHandler.getLimit() != temp) {maxLimitReached = true;
                                     Log.d(TAG, "onResponse: Data limit reached");
                                     mAdapter.removeEnd();
@@ -294,6 +294,13 @@ public class Events extends Fragment {
                         break;
                     case 2:
                         sendOneWyRequest(AppConstants.URL_ATTEND + mEventJsonHandler.getId(position));
+                        break;
+                    case 3:
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, check out this event. https://app.campusbox.org/#!/singleEvent/" + mEventJsonHandler.getId(position));
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);
                         break;
                     case 4:
                         Toast.makeText(getActivity(), "Filter", Toast.LENGTH_SHORT).show();

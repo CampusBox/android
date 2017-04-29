@@ -29,30 +29,27 @@
                     android:id="@+id/img_author"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:srcCompat="@drawable/ic_account_placeholder"
-                    />
+                    app:srcCompat="@drawable/ic_account_placeholder" />
 
                 <TextView
                     android:id="@+id/text_post_metadata"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/img_author"
                     android:layout_marginStart="8dp"
-                    android:text="Ayush Pahwa in Article"
-                    />
+                    android:layout_toEndOf="@id/img_author"
+                    android:text="Ayush Pahwa in Article" />
 
                 <TextView
                     android:id="@+id/text_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/img_author"
-                    android:layout_below="@id/text_post_metadata"
                     android:layout_alignStart="@id/text_post_metadata"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:text="29 Apr"
+                    android:layout_below="@id/text_post_metadata"
                     android:layout_marginTop="4dp"
-                    />
+                    android:layout_toEndOf="@id/img_author"
+                    android:text="29 Apr"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -60,16 +57,15 @@
                 android:id="@+id/img_cover"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:scaleType="centerCrop"
                 android:background="#E9E9E9"
-                />
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
                 android:orientation="vertical"
-                android:padding="8dp"
-                android:layout_marginBottom="4dp">
+                android:padding="8dp">
 
 
                 <TextView
@@ -88,41 +84,59 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:lineSpacingExtra="3dp"
                     android:maxLines="3"
                     android:minLines="1"
                     android:textSize="16sp"
-                    android:lineSpacingExtra="3dp"
                     tools:text="ClashHacks is one of the biggest student-run hackathon, covering both software and hardware. " />
 
             </LinearLayout>
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:background="#ececec" />-->
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ececec" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="4dp"
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/btn_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
                     android:drawableStart="@drawable/ic_appreciate_empty"
-                    android:text="Appreciate | 4"
-                    android:textColor="@color/colorAppreciate"
                     android:gravity="center"
-                    android:drawablePadding="8dp"/>
+                    android:text="Appreciate | 4"
+                    android:textColor="@color/colorAppreciate" />
+
 
                 <ImageView
                     android:id="@+id/btn_bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_bookmark_empty"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_alignParentEnd="true"
+                    app:srcCompat="@drawable/ic_bookmark_empty" />
+
+                <View
+                    android:id="@+id/static_separator"
+                    android:layout_width="1dp"
+                    android:layout_height="24dp"
+                    android:background="#ececec"
+                    android:layout_toStartOf="@id/btn_bookmark"
+                    android:layout_marginEnd="4dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/btn_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/static_separator"
+                    android:layout_marginEnd="8dp"
+                    app:srcCompat="@drawable/ic_share_grey" />
 
 
             </RelativeLayout>

@@ -35,7 +35,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Log.d(TAG, "RVAEvents: " + getItemCount());
     }
 
-    public void updateHandler(EventJsonHandler mEventJsonHandler, int addedCount) {
+    public void updateHandler(EventJsonHandler mEventJsonHandler) {
         setFlag(false);
         prevCount = this.mEventJsonHandler.Length();
         this.mEventJsonHandler = mEventJsonHandler;
@@ -89,8 +89,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         private CardView cardView;
-        private ImageView imgLike;
-        private ImageView imgEvent;
+        private ImageView imgLike, imgEvent, btnShare;
         private TextView textDate, textTitle, textVenue, textDesc, textLike;
         private LinearLayout btnLike, btnRSVP, optRSVP, optAttending;
 
@@ -106,6 +105,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             imgEvent = (ImageView) view.findViewById(R.id.event_image);
             btnLike = (LinearLayout) view.findViewById(R.id.btn_like);
             btnRSVP = (LinearLayout) view.findViewById(R.id.btn_rsvp);
+            btnShare = (ImageView) view.findViewById(R.id.btn_share);
             optRSVP = (LinearLayout) view.findViewById(R.id.container_rsvp);
             optAttending = (LinearLayout) view.findViewById(R.id.container_attending);
 
@@ -179,6 +179,14 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         mEventJsonHandler.setAttending(counter, true);
                     }
                     myClickListener.onItemClick(counter,view, 2);
+                }
+            });
+
+            holder.btnShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: share");
+                    myClickListener.onItemClick(counter,v,3);
                 }
             });
 

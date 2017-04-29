@@ -50,7 +50,7 @@ public class CreativeAdapter extends RecyclerView.Adapter<CreativeAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        ImageView imgAuthor, imgCover, btnBookmark;
+        ImageView imgAuthor, imgCover, btnBookmark, btnShare;
         TextView textAuthorData, textDate, textTitle, textDesc, btnLike;
 
         ViewHolder(View view) {
@@ -58,6 +58,7 @@ public class CreativeAdapter extends RecyclerView.Adapter<CreativeAdapter.ViewHo
             imgAuthor = (ImageView) view.findViewById(R.id.img_author);
             imgCover = (ImageView) view.findViewById(R.id.img_cover);
             btnBookmark = (ImageView) view.findViewById(R.id.btn_bookmark);
+            btnShare = (ImageView) view.findViewById(R.id.btn_share);
             btnLike = (TextView) view.findViewById(R.id.btn_like);
             textAuthorData = (TextView) view.findViewById(R.id.text_post_metadata);
             textDate = (TextView) view.findViewById(R.id.text_date);
@@ -144,6 +145,13 @@ public class CreativeAdapter extends RecyclerView.Adapter<CreativeAdapter.ViewHo
                     mCreativeJsonHandler.setBookmarked(holder.getAdapterPosition(), false);
                 }
                 myClickListener.onItemClick(holder.getAdapterPosition(), v, 2);
+            }
+        });
+
+        holder.btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myClickListener.onItemClick(holder.getAdapterPosition(), v, 3);
             }
         });
     }

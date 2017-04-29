@@ -79,19 +79,36 @@ public class EventJsonHandler {
                     .getString("date"), "T").nextToken());
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-            String from = new SimpleDateFormat("dd MMM").format(calendar.getTime());
+            String from = new SimpleDateFormat("E, dd MMM").format(calendar.getTime());
+            String fromTime = getTime(position,"from");
             date = new SimpleDateFormat("yyyy-MM-dd", Locale.US).parse(new StringTokenizer(jsonObject1.getJSONObject("to")
                     .getString("date"), "T").nextToken());
             calendar.setTime(date);
-            String to = new SimpleDateFormat("dd MMM").format(calendar.getTime());
+            String to = new SimpleDateFormat("E, dd MMM").format(calendar.getTime());
+            String toTime = getTime(position,"to");
             if (!from.equals(to))
-                from = from + " - " + to;
+                from = from + " " + fromTime + " - " + to + " " + toTime;
+            else if (!fromTime.equals(toTime))
+                from = from + " " + fromTime + " - " + toTime;
+            else
+                from = from + " " + fromTime;
             return from;
         } catch (Exception e) {
             Log.e("date", e.toString());
             return null;
         }
 
+    }
+
+    public String getTime(int position, String tag){
+        try {
+            JSONObject jsonObject1 = data.getJSONObject(position);
+            jsonObject1 = jsonObject1.getJSONObject("timings").getJSONObject(tag);
+            return jsonObject1.getString("time");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "12:00";
+        }
     }
 
     public String getVenue(int position) {
@@ -117,7 +134,6 @@ public class EventJsonHandler {
     public int Length() {
         return n;
     }
-
 
 
     public String getTitle(int position) {

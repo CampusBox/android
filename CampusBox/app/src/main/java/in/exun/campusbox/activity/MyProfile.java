@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,21 +37,14 @@ public class MyProfile extends AppCompatActivity {
     private TabLayout mTablayout;
     private ViewPager mViewPager;
     public SessionManager session;
+    public String value;
+    public JSONObject jsonObject;
     private ViewPagerAdapter mViewPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
         session = new SessionManager(getApplicationContext());
-        mTablayout=(TabLayout)findViewById(R.id.myprofile_tablayout);
-        mViewPager=(ViewPager)findViewById(R.id.view_pager);
-        mViewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPager.setOffscreenPageLimit(5);
-        mViewPager.setAdapter(mViewPagerAdapter);
-        mTablayout.setupWithViewPager(mViewPager);
-        mViewPagerAdapter.notifyDataSetChanged();
-        mViewPager.setCurrentItem(0);
-        mTablayout.setSelectedTabIndicatorColor(Color.WHITE);
          requestBuild();
     }
     public void requestBuild()
@@ -59,6 +54,20 @@ public class MyProfile extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.e( "onResponse: ",response );
+                        if(response!=null)
+                        {    value=response;
+
+                            mTablayout=(TabLayout)findViewById(R.id.myprofile_tablayout);
+                            mViewPager=(ViewPager)findViewById(R.id.view_pager);
+                            mViewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
+                            mViewPager.setOffscreenPageLimit(5);
+                            mViewPager.setAdapter(mViewPagerAdapter);
+                            mTablayout.setupWithViewPager(mViewPager);
+                            mViewPagerAdapter.notifyDataSetChanged();
+                            mViewPager.setCurrentItem(0);
+                            mTablayout.setSelectedTabIndicatorColor(Color.WHITE);
+
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -87,24 +96,34 @@ public class MyProfile extends AppCompatActivity {
         int count =6;
         @Override
         public Fragment getItem(int position) {
-          switch (position)
-          {
-              case 0:
-                 return Overview.instance();
-              case 1:
-                  return CreativityCreated.instance();
-              case 2:
-                  return EventsCreated.instance();
-              case 3:
-                  return Following.instance();
-              case 4:
-                  return Followers.instance();
-              case 5:
-                  return Recommended.instance();
+         try {
+             Bundle ob = new Bundle();
+             ob.putString("data",value);
+             switch (position) {
+                 case 0:
+                     Overview overview= Overview.instance();
+                     overview.setArguments(ob);
+                     return overview;
+                 case 1:
+                     CreativityCreated creativityCreated=CreativityCreated.instance();
+                     creativityCreated.setArguments(ob);
+                     return creativityCreated;
+                 case 2:
+                     return EventsCreated.instance();
+                 case 3:
+                     return Following.instance();
+                 case 4:
+                     return Followers.instance();
+                 case 5:
+                     return Recommended.instance();
 
-              default:
-                  return null;
-          }
+                 default:
+                     return null;
+             }
+         }catch (Exception e)
+         {
+             return null;
+         }
 
         }
 

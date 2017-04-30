@@ -38,9 +38,5 @@ public class AppConstants {
     public static final int PROCESS_NO_DATA = 5;
 
 
-    public static final String[] interests = {
-            "Articles", "Poetry", "Drama", "Paint and Colour", "Drawing", "Sewing and Fabric",
-            "Craft", "Clay", "Singing", "Instrumental", "Music Mixing", "Photography", "Film and Video",
-            "Animation", "Graphics", "UI and UX", "Websites", "Programming", "Apps", "Electronics", "DIY"
-    };
+
 }

@@ -2,6 +2,8 @@ package in.exun.campusbox.adapters;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -32,7 +34,7 @@ public class RVACreative extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private CreativeJsonHandler mCreativeJsonHandler;
     private static MyClickListener myClickListener;
-    private int prevCount = 0;
+    private int prevCount = 0, filterLen;
     private boolean flag = false, paging = true;
     private Context context;
 
@@ -45,6 +47,11 @@ public class RVACreative extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         prevCount = this.mCreativeJsonHandler.length();
         this.mCreativeJsonHandler = mCreativeJsonHandler;
         notifyItemInserted(prevCount + 2);
+    }
+
+    public void updateFilters(int len){
+        filterLen = len;
+        notifyItemChanged(0);
     }
 
     public RVACreative(Context context, CreativeJsonHandler mCreativeJsonHandler) {
@@ -62,33 +69,25 @@ public class RVACreative extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    static class HeaderViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+    static class HeaderViewHolder extends RecyclerView.ViewHolder {
 
+        CardView btnFilter, btnClear;
+        TextView textFilter;
 
         HeaderViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-        }
 
-        @Override
-        public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), itemView, 4);
+            btnFilter = (CardView) itemView.findViewById(R.id.btn_filter);
+            textFilter = (TextView) itemView.findViewById(R.id.static_filter_text);
+            btnClear = (CardView) itemView.findViewById(R.id.btn_clear);
         }
     }
 
-    static class FooterViewHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener {
+    static class FooterViewHolder extends RecyclerView.ViewHolder {
 
 
         FooterViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            myClickListener.onItemClick(getAdapterPosition(), itemView, 4);
         }
     }
 
@@ -218,6 +217,38 @@ public class RVACreative extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 flag = true;
                 prevCount = getItemCount() - 3;
             }
+        } else if (holderB instanceof HeaderViewHolder) {
+            final HeaderViewHolder holder = (HeaderViewHolder) holderB;
+            if (filterLen!=0) {
+                holder.btnClear.setVisibility(View.VISIBLE);
+                holder.btnFilter.setCardBackgroundColor(Color.RED);
+                holder.textFilter.setTextColor(Color.WHITE);
+                holder.textFilter.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filter_white, 0, 0, 0);
+            }else {
+                holder.btnClear.setVisibility(View.GONE);
+                holder.btnFilter.setCardBackgroundColor(Color.WHITE);
+                holder.textFilter.setTextColor(Color.BLACK);
+                holder.textFilter.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filter, 0, 0, 0);
+            }
+
+            holder.btnClear.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myClickListener.onItemClick(0, v, 5);
+                    filterLen = 0;
+                    ((HeaderViewHolder) holderB).btnClear.setVisibility(View.GONE);
+                    holder.btnFilter.setCardBackgroundColor(Color.WHITE);
+                    holder.textFilter.setTextColor(Color.BLACK);
+                    holder.textFilter.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_filter, 0, 0, 0);
+                }
+            });
+
+            holder.btnFilter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myClickListener.onItemClick(0, v, 4);
+                }
+            });
         }
     }
 

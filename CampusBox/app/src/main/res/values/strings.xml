@@ -21,4 +21,38 @@
     <string name="menu_creativity">Creativity</string>
     <string name="static_home_event_title">Events for you</string>
     <string name="static_home_content_title">Creative works by other students</string>
+
+    <string-array name="type_array">
+        <item>None</item>
+        <item>All</item>
+        <item>Competition</item>
+        <item>Conference</item>
+        <item>Exhibition</item>
+        <item>Performance</item>
+        <item>Workshop</item>
+        <item>Seminar</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="fee_array">
+        <item>None</item>
+        <item>All</item>
+        <item>Free</item>
+        <item>Paid</item>
+    </string-array>
+
+    <string-array name="time_array">
+        <item>None</item>
+        <item>All</item>
+        <item>Today</item>
+        <item>Tomorrow</item>
+        <item>This week</item>
+    </string-array>
+
+    <string-array name="college_array">
+        <item>None</item>
+        <item>All</item>
+        <item>My college</item>
+        <item>Other colleges</item>
+    </string-array>
 </resources>

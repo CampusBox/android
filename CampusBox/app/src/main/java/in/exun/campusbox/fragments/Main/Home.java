@@ -306,7 +306,7 @@ public class Home extends Fragment {
                 switch (type) {
                     case 0:
                         Intent i = new Intent(getActivity(), SingleEvent.class);
-                        i.putExtra(AppConstants.TAG_OBJ, mEventJsonHandler.getSingleData(position));
+                        i.putExtra(AppConstants.TAG_OBJ, mEventJsonHandler.getId(position));
                         startActivity(i);
                         break;
                     case 1:

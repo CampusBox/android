@@ -1,16 +1,20 @@
 package in.exun.campusbox.fragments.Main;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -38,7 +42,7 @@ import in.exun.campusbox.jsonHandlers.EventJsonHandler;
  * Created by Anurag145 on 4/2/2017.
  */
 
-public class Events extends Fragment {
+public class Events extends Fragment{
 
     private static final String TAG = "Events";
 
@@ -48,9 +52,13 @@ public class Events extends Fragment {
     private LinearLayoutManager mLayoutManager;
 
     private FloatingActionButton fabAddEvents;
-    private View rootView;
+    private View rootView,convertView;
     private LinearLayout contWait;
     private boolean maxLimitReached = false, loading = false;
+
+    Spinner spinnerType, spinnerFees, spinnerTimings, spinnerCollege;
+    ArrayAdapter<CharSequence> adapterType, adapterFees, adapterTimings, adapterCollege;
+    String filterType = "None", filterFees = "None", filterTimings = "None", filterCollege = "None";
 
     @Nullable
     @Override
@@ -111,13 +119,14 @@ public class Events extends Fragment {
                             JSONArray data = mEventJsonHandler.getData();
                             for (int i = 0; i < newData.length(); i++)
                                 data.put(newData.getJSONObject(i));
-                            mEventJsonHandler = new EventJsonHandler(data,meta);
+                            mEventJsonHandler = new EventJsonHandler(data, meta);
                             Log.d(TAG, "onResponse: " + temp + " " + mEventJsonHandler.Length());
                             updateUI(AppConstants.PROCESS_SUCCESS);
 
                             if (temp != 0) {
                                 mAdapter.updateHandler(mEventJsonHandler);
-                                if (mEventJsonHandler.getLimit() != temp) {maxLimitReached = true;
+                                if (mEventJsonHandler.getLimit() != temp) {
+                                    maxLimitReached = true;
                                     Log.d(TAG, "onResponse: Data limit reached");
                                     mAdapter.removeEnd();
                                 }
@@ -280,14 +289,14 @@ public class Events extends Fragment {
                 switch (type) {
                     case 0:
                         try {
-                            Log.e("Anurag",String.valueOf(v.getId()));
+                            Log.e("Anurag", String.valueOf(v.getId()));
                             Intent i = new Intent(getActivity(), SingleEvent.class);
                             i.putExtra(AppConstants.TAG_OBJ, v.getContentDescription());
                             startActivity(i);
-                        }catch (Exception e)
+                        } catch (Exception e)
 
                         {
-                            Log.e("Tag",e.toString());
+                            Log.e("Tag", e.toString());
                         }
                         break;
                     case 1:
@@ -304,11 +313,116 @@ public class Events extends Fragment {
                         startActivity(sendIntent);
                         break;
                     case 4:
-                        Toast.makeText(getActivity(), "Filter", Toast.LENGTH_SHORT).show();
+                        showFilters();
+                        break;
+                    case 5:
+                        filterType = "~";
+                        filterFees = "~";
+                        filterTimings = "~";
+                        filterCollege = "~";
                         break;
                 }
             }
         });
+    }
+
+    public void showFilters() {
+
+        initDialog();
+
+        if (!filterType.equals("None")) {
+            int spinnerPosition = adapterType.getPosition(filterType);
+            Log.d(TAG, "showFilters: " + spinnerPosition);
+            spinnerType.setSelection(spinnerPosition);
+        }
+        if (!filterFees.equals("None")) {
+            int spinnerPosition = adapterFees.getPosition(filterFees);
+            Log.d(TAG, "showFilters: " + spinnerPosition);
+            spinnerFees.setSelection(spinnerPosition);
+        }
+        if (!filterTimings.equals("None")) {
+            int spinnerPosition = adapterTimings.getPosition(filterTimings);
+            Log.d(TAG, "showFilters: " + spinnerPosition);
+            spinnerTimings.setSelection(spinnerPosition);
+        }
+        if (!filterCollege.equals("None")) {
+            int spinnerPosition = adapterCollege.getPosition(filterCollege);
+            Log.d(TAG, "showFilters: " + spinnerPosition);
+            spinnerCollege.setSelection(spinnerPosition);
+        }
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity())
+                .setView(convertView)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                })
+                .setNeutralButton("Clear", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        filterType = "~";
+                        filterFees = "~";
+                        filterTimings = "~";
+                        filterCollege = "~";
+                        mAdapter.updateFilters(false);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .setCancelable(true);
+
+        final AlertDialog dialog = alertDialog.create();
+        dialog.show();
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                filterType = spinnerType.getSelectedItem().toString();
+                filterFees = spinnerFees.getSelectedItem().toString();
+                filterTimings = spinnerTimings.getSelectedItem().toString();
+                filterCollege = spinnerCollege.getSelectedItem().toString();
+
+                if (!filterType.equals("None") || !filterFees.equals("None") || !filterTimings.equals("None") || !filterCollege.equals("None"))
+                    mAdapter.updateFilters(true);
+                else
+                    mAdapter.updateFilters(false);
+
+                dialog.dismiss();
+
+            }
+        });
+
+    }
+
+    private void initDialog() {
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        convertView = (View) inflater.inflate(R.layout.comp_filter_events, null);
+
+        spinnerType = (Spinner) convertView.findViewById(R.id.spinner_type);
+        spinnerFees = (Spinner) convertView.findViewById(R.id.spinner_fees);
+        spinnerTimings = (Spinner) convertView.findViewById(R.id.spinner_timings);
+        spinnerCollege = (Spinner) convertView.findViewById(R.id.spinner_college);
+
+        adapterType = ArrayAdapter.createFromResource(getActivity(), R.array.type_array, android.R.layout.simple_spinner_item);
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterFees = ArrayAdapter.createFromResource(getActivity(), R.array.fee_array, android.R.layout.simple_spinner_item);
+        adapterFees.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterTimings = ArrayAdapter.createFromResource(getActivity(), R.array.time_array, android.R.layout.simple_spinner_item);
+        adapterTimings.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterCollege = ArrayAdapter.createFromResource(getActivity(), R.array.college_array, android.R.layout.simple_spinner_item);
+        adapterCollege.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerType.setAdapter(adapterType);
+        spinnerFees.setAdapter(adapterFees);
+        spinnerTimings.setAdapter(adapterTimings);
+        spinnerCollege.setAdapter(adapterCollege);
     }
 
     private void sendOneWyRequest(String url) {

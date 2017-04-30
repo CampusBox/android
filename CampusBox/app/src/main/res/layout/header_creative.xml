@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <!--Filter button-->
     <android.support.v7.widget.CardView
         android:id="@+id/btn_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_alignParentEnd="true"
         android:layout_margin="8dp">
 
         <TextView
+            android:id="@+id/static_filter_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -22,4 +23,23 @@
             android:text="Filter" />
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+    <!--Filter button-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/btn_filter"
+        android:layout_margin="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_close"
+            android:gravity="center"
+            android:text="Clear" />
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

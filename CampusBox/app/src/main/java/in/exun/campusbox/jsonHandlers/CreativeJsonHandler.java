@@ -227,4 +227,5 @@ public class CreativeJsonHandler {
     public int getLimit() {
         return limit;
     }
+
 }

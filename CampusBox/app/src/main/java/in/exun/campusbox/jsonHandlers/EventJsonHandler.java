@@ -215,4 +215,5 @@ public class EventJsonHandler {
     public int getLimit() {
         return limit;
     }
+
 }

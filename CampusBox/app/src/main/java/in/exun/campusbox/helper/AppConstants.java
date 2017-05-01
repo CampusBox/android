@@ -28,6 +28,7 @@ public class AppConstants {
     public static final String URL_CREATIVE = "https://app.campusbox.org/api/public/contents?";
     public static final String URL_SINGLE_EVENT="https://app.campusbox.org/api/public/event/";
     public static final String URL_PROFILE="https://app.campusbox.org/api/public/myProfile";
+    public static final String URL_SEARCH = "https://app.campusbox.org/api/public/search/";
 
 
     public static final int PROCESS_SUCCESS = 0;

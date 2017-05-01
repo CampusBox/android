@@ -46,13 +46,13 @@ public class Profile extends Fragment {
                 startActivity(i);
             }
         });
-        /*btnLogout = (Button) view.findViewById(R.id.btn_logout);
+        btnLogout = (Button) view.findViewById(R.id.btn_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).signOut();
             }
-        });*/
+        });
 
         return view;
     }

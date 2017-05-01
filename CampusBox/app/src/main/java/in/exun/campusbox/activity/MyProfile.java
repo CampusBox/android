@@ -1,5 +1,6 @@
 package in.exun.campusbox.activity;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import in.exun.campusbox.fragments.MyProfileFrags.EventsCreated;
 import in.exun.campusbox.fragments.MyProfileFrags.Followers;
 import in.exun.campusbox.fragments.MyProfileFrags.Following;
 import in.exun.campusbox.fragments.MyProfileFrags.Overview;
+import in.exun.campusbox.fragments.MyProfileFrags.RSVP;
 import in.exun.campusbox.fragments.MyProfileFrags.Recommended;
 import in.exun.campusbox.helper.AppConstants;
 import in.exun.campusbox.helper.AppController;
@@ -38,7 +40,8 @@ public class MyProfile extends AppCompatActivity {
     private ViewPager mViewPager;
     public SessionManager session;
     public String value;
-    public JSONObject jsonObject;
+
+
     private ViewPagerAdapter mViewPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class MyProfile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e( "onResponse: ",response );
+
                         if(response!=null)
                         {    value=response;
 
@@ -93,7 +96,7 @@ public class MyProfile extends AppCompatActivity {
         {
            super (fm);
         }
-        int count =6;
+        int count =7;
         @Override
         public Fragment getItem(int position) {
          try {
@@ -108,14 +111,21 @@ public class MyProfile extends AppCompatActivity {
                      CreativityCreated creativityCreated=CreativityCreated.instance();
                      creativityCreated.setArguments(ob);
                      return creativityCreated;
-                 case 2:
-                     return EventsCreated.instance();
-                 case 3:
-                     return Following.instance();
-                 case 4:
-                     return Followers.instance();
-                 case 5:
-                     return Recommended.instance();
+                 case 2: Recommended recommended=Recommended.instance();
+                     recommended.setArguments(ob);
+                     return recommended;
+                 case 3: RSVP rsvp=RSVP.instance();
+                        rsvp.setArguments(ob);
+                     return rsvp;
+                 case 4: Following following=Following.instance();
+                      following.setArguments(ob);
+                     return following;
+                 case 5:Followers followers=Followers.instance();
+                     followers.setArguments(ob);
+                     return followers;
+                 case 6: EventsCreated eventsCreated= EventsCreated.instance();
+                     eventsCreated.setArguments(ob);
+                     return  eventsCreated;
 
                  default:
                      return null;
@@ -134,14 +144,15 @@ public class MyProfile extends AppCompatActivity {
                 case 0:
                     return "Overview";
                 case 1:
-                    return "Creativity Created";
+                    return "Creative Content";
                 case 2:
                     return "Events Created";
                 case 3:
-                    return  "Following";
-                case 4:
-                    return  "Followers";
+                    return  "Rsvp";
+                case 4: return "Following";
                 case 5:
+                    return  "Followers";
+                case 6:
                     return "Recommended";
             }
             return "";

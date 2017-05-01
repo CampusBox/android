@@ -13,59 +13,61 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import in.exun.campusbox.R;
-import in.exun.campusbox.adapters.RVAFollow;
-import in.exun.campusbox.jsonHandlers.FollowJsonHandler;
+import in.exun.campusbox.adapters.RVAProfileEvents;
+import in.exun.campusbox.jsonHandlers.EventJsonHandler;
 
 /**
- * Created by Anurag145 on 4/30/2017.
+ * Created by Anurag145 on 5/1/2017.
  */
 
-public class Following extends Fragment {
-    public View rootview;
-    String mydata;
-    public RecyclerView recyclerView;
+public class RSVP extends Fragment {
+    EventJsonHandler eventJsonHandler;
+    public String mydata;
     RecyclerView.LayoutManager mLayoutManager;
-    FollowJsonHandler followJsonHandler;
-    RVAFollow rvaf;
-    public Following()
+    RVAProfileEvents rvape;
+    View rootview;
+    public RecyclerView recyclerView;
+
+    public RSVP()
     {
 
     }
-    public static Following instance(){return new Following();}
+    public static RSVP instance(){return new RSVP();}
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootview=inflater.inflate(R.layout.fragment_following,container,false);
+         rootview=inflater.inflate(R.layout.fragment_rsvp,container,false);
         mydata=getArguments().getString("data");
         mLayoutManager=new LinearLayoutManager(getActivity());
-        recyclerView=(RecyclerView)rootview.findViewById(R.id.Follow);
+        recyclerView=(RecyclerView)rootview.findViewById(R.id.Attending_events);
         initialize();
         return rootview;
     }
     public void initialize()
     {
-        try
-        {
+        try{
             JSONObject jsonObject = new JSONObject(mydata);
             jsonObject=new JSONObject( jsonObject.getString("data"));
-            JSONObject jsonObject1=new JSONObject(jsonObject.getString("Following"));
-            JSONArray jsonArray=new JSONArray(jsonObject1.getString("data"));
-            followJsonHandler=new FollowJsonHandler(jsonArray);
+            JSONObject jsonObject1=new JSONObject(jsonObject.getString("AttendingEvents"));
+            eventJsonHandler=new EventJsonHandler(new JSONArray(jsonObject1.getString("data")),null);
 
-            if(followJsonHandler.Length()!=0)
+            if (eventJsonHandler.Length()!=0)
             {
-                rvaf=new RVAFollow(followJsonHandler,getContext());
+                rvape=new RVAProfileEvents(eventJsonHandler,getContext());
                 recyclerView.setLayoutManager(mLayoutManager);
-                recyclerView.setAdapter(rvaf);
-
+                recyclerView.setAdapter(rvape);
             }else
             {
                 recyclerView.setVisibility(View.GONE);
                 rootview.findViewById(R.id.nullEntry).setVisibility(View.VISIBLE);
             }
+
+
+
         }catch (Exception e)
         {
 
         }
+
     }
 }

@@ -3,17 +3,31 @@ package in.exun.campusbox.fragments.MyProfileFrags;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import in.exun.campusbox.R;
+import in.exun.campusbox.adapters.RVAProfileCreative;
+import in.exun.campusbox.jsonHandlers.CreativeJsonHandler;
 
 /**
  * Created by Anurag145 on 4/30/2017.
  */
 
 public class Recommended extends Fragment{
+    public View rootview;
+    String mydata;
+    public RecyclerView recyclerView;
+    CreativeJsonHandler creativeJsonHandler;
+    RecyclerView.LayoutManager mLayoutManager;
+    RVAProfileCreative rvapc;
 
     public Recommended()
     {
@@ -23,7 +37,40 @@ public static Recommended instance(){return new Recommended();}
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_recommended,container,false);
-        return view;
+        rootview=inflater.inflate(R.layout.fragment_recommended,container,false);
+        mydata=getArguments().getString("data");
+        mLayoutManager=new LinearLayoutManager(getActivity());
+        recyclerView=(RecyclerView)rootview.findViewById(R.id.recommended_creativity);
+        initialize();
+        return rootview;
+    }
+    public void initialize()
+    {
+        try {
+
+            JSONObject jsonObject = new JSONObject(mydata);
+            jsonObject=new JSONObject( jsonObject.getString("data"));
+            JSONObject jsonObject1=new JSONObject(jsonObject.getString("BookmarkedContents"));
+
+            creativeJsonHandler=new CreativeJsonHandler(new JSONArray(jsonObject1.getString("data")),null);
+
+            if(creativeJsonHandler.length()!=0)
+            {
+                Log.e( "initialize: ",String.valueOf(creativeJsonHandler.length()) );
+
+                rvapc=new RVAProfileCreative(creativeJsonHandler,getContext());
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setAdapter(rvapc);
+
+            }else
+            {
+                recyclerView.setVisibility(View.GONE);
+                rootview.findViewById(R.id.nullEntry).setVisibility(View.VISIBLE);
+            }
+
+        }catch (Exception e)
+        {
+
+        }
     }
 }

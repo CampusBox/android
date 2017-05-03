@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:drawableLeft="@drawable/facebook"
+                android:drawableLeft="@drawable/ic_fb"
                 android:background="#3949AB"
                 android:textColor="#fff"
                 android:paddingStart="2dp"

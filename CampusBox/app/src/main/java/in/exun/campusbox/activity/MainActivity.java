@@ -41,13 +41,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (Intent.ACTION_VIEW.equals(action)) {
             String url = intent.getData().toString();
             if (url.contains("/singleEvent/")){
-                int id = Integer.parseInt(url.substring(url.indexOf("Event/") + 6));
+                String id = url.substring(url.indexOf("Event/") + 6);
                 Log.d(TAG, "onCreate: Event "+ id) ;
                 Intent i = new Intent(this, SingleEvent.class);
                 i.putExtra(AppConstants.TAG_OBJ, id);
                 startActivity(i);
             } else if (url.contains("/singleContent/")){
-                int id = Integer.parseInt(url.substring(url.indexOf("Content/") + 8));
+                String id = url.substring(url.indexOf("Content/") + 8);
                 Log.d(TAG, "onCreate: Creativity "+ id) ;
                 Intent i = new Intent(this, SinglePost.class);
                 i.putExtra(AppConstants.TAG_OBJ, id);
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initialise() {
 
         session = new SessionManager(getApplicationContext());
-        displayView(1, false);
+        displayView(3, false);
     }
 
     private void setupBottomNav() {

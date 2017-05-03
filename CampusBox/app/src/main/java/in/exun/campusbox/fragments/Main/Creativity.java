@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import in.exun.campusbox.R;
+import in.exun.campusbox.activity.AddCreativity;
 import in.exun.campusbox.activity.MainActivity;
 import in.exun.campusbox.activity.SinglePost;
 import in.exun.campusbox.adapters.RVACreative;
@@ -86,7 +87,7 @@ public class Creativity extends Fragment implements View.OnClickListener {
         fabAddCreative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Add new post", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), AddCreativity.class));
             }
         });
     }

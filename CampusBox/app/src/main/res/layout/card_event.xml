@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:fontFamily="serif"
                 android:gravity="start"
                 android:textColor="#000"
                 android:textSize="20sp"
@@ -65,6 +66,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
+                android:fontFamily="serif"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:minLines="1"
@@ -79,6 +81,7 @@
                 android:layout_marginStart="8dp"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_time"
+                android:fontFamily="serif"
                 android:gravity="center_vertical"
                 android:padding="8dp"
                 android:textSize="14sp"
@@ -92,6 +95,7 @@
                 android:layout_marginStart="8dp"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_location"
+                android:fontFamily="serif"
                 android:gravity="center_vertical"
                 android:padding="8dp"
                 android:textSize="14sp"
@@ -131,6 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:fontFamily="serif"
                         android:padding="4dp"
                         android:text="Appreciated"
                         android:textColor="@color/colorAppreciate" />
@@ -166,6 +171,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="serif"
                             android:text="Attending"
                             android:textColor="#06558f" />
 
@@ -191,6 +197,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:fontFamily="serif"
                             android:text="RSVP"
                             android:textColor="#fff" />
 

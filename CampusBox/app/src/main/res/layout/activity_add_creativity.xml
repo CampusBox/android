@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="in.exun.campusbox.activity.AddCreativity">
+
+    <HorizontalScrollView
+        android:id="@+id/container_tools"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_bold"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_bold" />
+
+            <ImageButton
+                android:id="@+id/btn_italics"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_italic" />
+
+            <ImageButton
+                android:id="@+id/btn_underline"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_underlined" />
+
+            <ImageButton
+                android:id="@+id/btn_strikethrough"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_strikethrough" />
+
+            <ImageButton
+                android:id="@+id/btn_bullet"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_bullet" />
+
+            <ImageButton
+                android:id="@+id/btn_quote"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_quote" />
+
+            <ImageButton
+                android:id="@+id/btn_link"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_insert_link" />
+
+            <ImageButton
+                android:id="@+id/btn_add"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_attachment" />
+
+            <ImageButton
+                android:id="@+id/btn_how"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?android:selectableItemBackground"
+                android:contentDescription="@null"
+                android:scaleType="center"
+                app:srcCompat="@drawable/ic_help" />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/container_tools"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <io.github.mthli.knife.KnifeText
+                android:id="@+id/input_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent"
+                android:fontFamily="sarif"
+                android:hint="Title"
+                android:padding="16dp"
+                android:inputType="textCapSentences"
+                android:textSize="32sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/btn_add_cover"
+                android:layout_below="@id/input_title"
+                android:drawableStart="@drawable/ic_add_photo_small"
+                android:text="Add cover photo"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:textColor="#8e8e8e"
+                android:drawablePadding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="italic" />
+
+            <ImageView
+                android:id="@+id/img_cover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_below="@id/btn_add_cover" />
+
+            <io.github.mthli.knife.KnifeText
+                android:id="@+id/input_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/img_cover"
+                android:background="@android:color/transparent"
+                android:fontFamily="sarif"
+                android:gravity="top|start"
+                android:hint="Tell your story.."
+                android:inputType="textCapSentences"
+                android:minHeight="200dp"
+                android:padding="16dp"
+                android:scrollbars="vertical"
+                android:textSize="20sp"
+                app:bulletColor="@color/colorPrimaryDark"
+                app:bulletGapWidth="@dimen/bullet_gap_width"
+                app:bulletRadius="@dimen/bullet_radius"
+                app:historyEnable="true"
+                app:historySize="99"
+                app:linkColor="@color/colorPrimaryDark"
+                app:linkUnderline="true"
+                app:quoteCapWidth="@dimen/quote_gap_width"
+                app:quoteColor="@color/colorPrimaryDark"
+                app:quoteStripeWidth="@dimen/quote_stripe_width" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_extra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/input_post"/>
+
+        </RelativeLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

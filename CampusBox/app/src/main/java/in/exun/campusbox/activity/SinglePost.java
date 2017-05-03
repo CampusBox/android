@@ -18,7 +18,7 @@ public class SinglePost extends AppCompatActivity {
         setContentView(R.layout.activity_single_post);
 
         Bundle extra = getIntent().getExtras();
-        ((TextView)findViewById(R.id.text_test)).setText("Such design\nMuch wow\n10/10 \n" + extra.getInt(AppConstants.TAG_OBJ));
+        ((TextView)findViewById(R.id.text_test)).setText("Such design\nMuch wow\n10/10 \n" + extra.getString(AppConstants.TAG_OBJ));
 
 
     }

@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import in.exun.campusbox.R;
+import in.exun.campusbox.activity.AddEvent;
 import in.exun.campusbox.activity.MainActivity;
 import in.exun.campusbox.activity.SingleEvent;
 import in.exun.campusbox.adapters.RVAEvents;
@@ -81,7 +82,7 @@ public class Events extends Fragment{
         fabAddEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Add new event", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), AddEvent.class));
             }
         });
     }

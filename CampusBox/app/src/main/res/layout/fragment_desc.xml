@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_bold"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_bold" />
+
+        <ImageButton
+            android:id="@+id/btn_italics"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_italic" />
+
+        <ImageButton
+            android:id="@+id/btn_underline"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_underlined" />
+
+        <ImageButton
+            android:id="@+id/btn_strikethrough"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_strikethrough" />
+
+        <ImageButton
+            android:id="@+id/btn_bullet"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_bullet" />
+
+        <ImageButton
+            android:id="@+id/btn_quote"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_quote" />
+
+        <ImageButton
+            android:id="@+id/btn_link"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_insert_link" />
+
+        <ImageButton
+            android:id="@+id/btn_how"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:selectableItemBackground"
+            android:contentDescription="@null"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_help" />
+
+    </LinearLayout>
+
+    <io.github.mthli.knife.KnifeText
+        android:id="@+id/knife"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/layout_tools"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:fontFamily="serif"
+        android:gravity="top|start"
+        android:hint="Mention complete details about the event here (including rules and prizes).."
+        android:paddingEnd="24dp"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:scrollbars="vertical"
+        android:textColorHint="#8e8e8e"
+        app:bulletColor="@color/colorPrimaryDark"
+        app:bulletGapWidth="@dimen/bullet_gap_width"
+        app:bulletRadius="@dimen/bullet_radius"
+        app:historyEnable="true"
+        app:historySize="99"
+        app:linkColor="@color/colorPrimaryDark"
+        app:linkUnderline="true"
+        app:quoteCapWidth="@dimen/quote_gap_width"
+        app:quoteColor="@color/colorPrimaryDark"
+        app:quoteStripeWidth="@dimen/quote_stripe_width" />
+
+</RelativeLayout>

@@ -212,7 +212,7 @@ public class Search extends Fragment {
                                     mRecyclerView.setAdapter(mAdapterEvents);
                                     updateUI(AppConstants.PROCESS_SUCCESS, PART_EVENTS);
                                 } else {
-                                    updateUI(AppConstants.PROCESS_FAILURE, PART_EVENTS);
+                                    updateUI(AppConstants.PROCESS_NO_DATA, PART_EVENTS);
                                 }
                             } else {
                                 updateUI(AppConstants.PROCESS_FAILURE, PART_EVENTS);
@@ -263,6 +263,7 @@ public class Search extends Fragment {
                             JSONObject resp = new JSONObject(response);
                             if (resp.has("data")) {
                                 JSONArray data = resp.getJSONArray("data");
+                                Log.d(TAG, "onResponse: " + data.length());
                                 if (data.length() > 0) {
                                     mCreativeJsonHandler = new CreativeJsonHandler(data, null); //Sending null because we don't need pagination here
                                     mAdapterCreative = new RVACreativeHome(getActivity(), mCreativeJsonHandler, data.length());
@@ -323,16 +324,16 @@ public class Search extends Fragment {
                                     mCreativeJsonHandler = new CreativeJsonHandler(data, null); //Sending null because we don't need pagination here
                                     mAdapterCreative = new RVACreativeHome(getActivity(), mCreativeJsonHandler, data.length());
                                     mRecyclerView.setAdapter(mAdapterCreative);
-                                    updateUI(AppConstants.PROCESS_SUCCESS, PART_CREATIVE);
+                                    updateUI(AppConstants.PROCESS_SUCCESS, PART_PROFILE);
                                 } else {
-                                    updateUI(AppConstants.PROCESS_FAILURE, PART_CREATIVE);
+                                    updateUI(AppConstants.PROCESS_NO_DATA, PART_PROFILE);
                                 }
                             } else {
-                                updateUI(AppConstants.PROCESS_FAILURE, PART_CREATIVE);
+                                updateUI(AppConstants.PROCESS_FAILURE, PART_PROFILE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            updateUI(AppConstants.PROCESS_FAILURE, PART_CREATIVE);
+                            updateUI(AppConstants.PROCESS_FAILURE, PART_PROFILE);
                         }
 
                     }
@@ -440,13 +441,18 @@ public class Search extends Fragment {
                 imgBack.setText("Let us know what are you searching for..");
                 break;
             case AppConstants.PROCESS_NO_DATA:
+                mRecyclerView.setVisibility(View.GONE);
+                contaWaitNorm.setVisibility(View.GONE);
+                contaWaitProfile.setVisibility(View.GONE);
+                imgBack.setVisibility(View.VISIBLE);
                 String error = "";
-                if (reqCode == PART_EVENTS)
+                if (partCode == PART_EVENTS)
                     error = "Couldn't find any events with query";
-                else if (reqCode == PART_CREATIVE)
+                else if (partCode == PART_CREATIVE)
                     error = "Couldn't find any posts with query";
-                else if (reqCode == PART_EVENTS)
+                else if (partCode == PART_PROFILE)
                     error = "Couldn't find any user with query";
+                Log.d(TAG, "updateUI: " + error);
                 imgBack.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_mood_bad, 0, 0);
                 imgBack.setText(error);
                 break;

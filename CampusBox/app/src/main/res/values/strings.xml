@@ -34,6 +34,15 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="add_type_array">
+        <item>Competition</item>
+        <item>Conference</item>
+        <item>Exhibition</item>
+        <item>Performance</item>
+        <item>Workshop</item>
+        <item>Seminar</item>
+    </string-array>
+
     <string-array name="fee_array">
         <item>None</item>
         <item>All</item>
@@ -54,6 +63,11 @@
         <item>All</item>
         <item>My college</item>
         <item>Other colleges</item>
+    </string-array>
+
+    <string-array name="audience_array">
+        <item>My college</item>
+        <item>Everyone</item>
     </string-array>
 
     <string-array name="search_array">

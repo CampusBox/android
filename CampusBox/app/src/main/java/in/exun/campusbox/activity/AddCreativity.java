@@ -1,11 +1,13 @@
 package in.exun.campusbox.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -14,9 +16,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,22 +37,36 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.exun.campusbox.R;
 import in.exun.campusbox.adapters.LVSetup;
 import in.exun.campusbox.adapters.RVACreativeItems;
 import in.exun.campusbox.helper.AppConstants;
+import in.exun.campusbox.helper.AppController;
 import in.exun.campusbox.helper.BitmapUtils;
+import in.exun.campusbox.helper.DataSet;
+import in.exun.campusbox.helper.RoundedBackgroundSpan;
+import in.exun.campusbox.helper.SessionManager;
 import in.exun.campusbox.model.CreativityItems;
 import io.github.mthli.knife.KnifeText;
+import mabbas007.tagsedittext.TagsEditText;
 
-public class AddCreativity extends AppCompatActivity {
+public class AddCreativity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "AddCreativity";
     private static final int SET_COVER = 23;
@@ -53,9 +75,10 @@ public class AddCreativity extends AppCompatActivity {
     private static final int TYPE_SOUND = 1;
     private static final int TYPE_YOUTUBE = 2;
     private static final int TYPE_VIMEO = 3;
-    KnifeText inputTitle, inputPost;
-    ImageView imgCover;
-    TextView btnSetCover;
+    EditText inputTitle;
+    KnifeText inputPost;
+    ImageView imgCover, btnClose;
+    TextView btnSetCover, textCat, btnPublish;
     RecyclerView mRecyclerView;
     HorizontalScrollView containerTools;
     private AlertDialog alert;
@@ -64,21 +87,42 @@ public class AddCreativity extends AppCompatActivity {
     List<CreativityItems> items = new ArrayList<>();
     private int shouldUpdate = -1;
 
+    private DataSet dataSet;
+    private TextView intItem;
+    private CardView intItemContainer;
+    private AlertDialog dialog;
+    private String category;
+    private SessionManager session;
+    private ProgressDialog pDialog;
+    private int categoryId = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_creativity);
 
+        session = new SessionManager(this);
         initialise();
     }
 
     private void initialise() {
-        inputTitle = (KnifeText) findViewById(R.id.input_title);
+
+        // Progress dialog
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
+        pDialog.setIndeterminate(true);
+
+        inputTitle = (EditText) findViewById(R.id.input_title);
         inputPost = (KnifeText) findViewById(R.id.input_post);
         imgCover = (ImageView) findViewById(R.id.img_cover);
+        btnClose = (ImageView) findViewById(R.id.btn_close);
+        textCat = (TextView) findViewById(R.id.text_category);
+        textCat.setMovementMethod(LinkMovementMethod.getInstance());
+        btnPublish = (TextView) findViewById(R.id.btn_publish);
         btnSetCover = (TextView) findViewById(R.id.btn_add_cover);
         containerTools = (HorizontalScrollView) findViewById(R.id.container_tools);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_extra);
+        dataSet = new DataSet();
 
         btnSetCover.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +148,21 @@ public class AddCreativity extends AppCompatActivity {
             }
         });
 
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btnPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getTags();
+            }
+        });
+
+        showFilters(true);
         setupBold();
         setupItalic();
         setupUnderline();
@@ -193,17 +252,18 @@ public class AddCreativity extends AppCompatActivity {
     }
 
     private void setupInsert() {
+        inputPost.hideSoftInput();
         ImageButton link = (ImageButton) findViewById(R.id.btn_add);
 
         link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setupAdd();
+                showAddDialog();
             }
         });
     }
 
-    private void setupAdd() {
+    private void showAddDialog() {
 
         LayoutInflater inflater = getLayoutInflater();
         View convertView = (View) inflater.inflate(R.layout.comp_list_view, null);
@@ -257,6 +317,7 @@ public class AddCreativity extends AppCompatActivity {
     }
 
     private void setupHelp() {
+        inputPost.hideSoftInput();
         ImageButton help = (ImageButton) findViewById(R.id.btn_how);
 
         help.setOnClickListener(new View.OnClickListener() {
@@ -417,15 +478,9 @@ public class AddCreativity extends AppCompatActivity {
         Bitmap mBitmap = BitmapFactory.decodeFile(filePath);
         Log.d(TAG, "loadNewImage: " + mBitmap.getWidth() + " " + mBitmap.getHeight());
 
-
-        float scale;
-        Bitmap mutableBitmap = mBitmap.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas canvas = new Canvas(mutableBitmap);
-        float xTranslation = 0.0f, yTranslation = 0.0f;
-
         if (!(1000 > mBitmap.getWidth()) && !(800 > mBitmap.getHeight())) {
 
-            mBitmap = resizeBitmapFitXY(1000,800,mBitmap);
+            mBitmap = resizeBitmapFitXY(1000, 800, mBitmap);
         }
 
         Log.d(TAG, "loadNewImage: " + mBitmap.getWidth() + " " + mBitmap.getHeight());
@@ -450,18 +505,18 @@ public class AddCreativity extends AppCompatActivity {
         }
     }
 
-    public Bitmap resizeBitmapFitXY(int width, int height, Bitmap bitmap){
+    public Bitmap resizeBitmapFitXY(int width, int height, Bitmap bitmap) {
         Bitmap background = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         float originalWidth = bitmap.getWidth(), originalHeight = bitmap.getHeight();
         Canvas canvas = new Canvas(background);
         float scale, xTranslation = 0.0f, yTranslation = 0.0f;
 
-        if (( originalWidth - width) > (originalHeight-height)) {
-            scale = width/originalWidth;
-            yTranslation = (height - originalHeight * scale)/2.0f;
+        if ((originalWidth - width) > (originalHeight - height)) {
+            scale = width / originalWidth;
+            yTranslation = (height - originalHeight * scale) / 2.0f;
         } else {
-            scale = height/originalHeight;
-            xTranslation = (width - originalWidth * scale)/2.0f;
+            scale = height / originalHeight;
+            xTranslation = (width - originalWidth * scale) / 2.0f;
         }
 
         Matrix transformation = new Matrix();
@@ -517,12 +572,207 @@ public class AddCreativity extends AppCompatActivity {
         });
     }
 
-    private void addContent(){
+    private void getTags() {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = (View) inflater.inflate(R.layout.comp_tags, null);
+        TagsEditText input_tags = (TagsEditText) convertView.findViewById(R.id.input_tags);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this)
+                .setView(convertView)
+                .setTitle("Pick a category")
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+        dialog = alertDialog.create();
+        dialog.show();
+    }
+
+    private void addContent() {
+
+        if (!validate())
+            return;
+
+        pDialog.setMessage("Uploading...");
+        showDialog();
+
+        JsonObjectRequest strReq = new JsonObjectRequest(Request.Method.POST,
+                AppConstants.URL_ADD_CONTENT, getPostJson(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                hideDialog();
+                try {
+                    String status = response.getString("message");
+                    if (status.equals("Registered Successfully")) {
+                        Toast.makeText(AddCreativity.this, "Done!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else
+                        Toast.makeText(AddCreativity.this, "Couldn't add content", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    Toast.makeText(AddCreativity.this, "Error in internet connection", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.toString());
+                Toast.makeText(AddCreativity.this, "Error in internet connection", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                String token = "Bearer " + session.getLoginToken();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", token);
+                return params;
+            }
+        };
+
+        AppController.getInstance().addToRequestQueue(strReq, TAG);
 
     }
 
-    private JSONObject getPostJson(){
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+
+        if (inputTitle.getText().length() == 0) {
+            valid = false;
+            inputTitle.setError("This field can't be empty");
+        }
+
+        if (inputPost.getText().length() == 0) {
+            valid = false;
+            inputPost.setError("This field can't be empty");
+        }
+
+        return valid;
+    }
+
+    private JSONObject getPostJson() {
         JSONObject obj = new JSONObject();
-        return null;
+        JSONArray arr = new JSONArray();
+        JSONObject object;
+        inputPost.clearComposingText();
+        try {
+            obj.put("title", inputTitle.getText().toString());
+            obj.put("type", categoryId);
+            object = new JSONObject();
+            object.put("mediaType", "text");
+            object.put("text",inputPost.toHtml());
+            if (imgCover != null)
+            for (int i = 0; i<items.size();i++){
+                object = new JSONObject();
+
+                arr.put(object);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
+
+    public void showFilters(boolean firstTime) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        final View convertView = (View) inflater.inflate(R.layout.comp_interests, null);
+        convertView.setPadding(0, 32, 0, 32);
+        clickListeners(convertView);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this)
+                .setView(convertView)
+                .setTitle("Pick a category")
+                .setCancelable(false);
+
+        if (!firstTime) {
+            intItem.setTextColor(Color.WHITE);
+            intItemContainer.setCardBackgroundColor(Color.RED);
+            alertDialog.setPositiveButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+
+        dialog = alertDialog.create();
+        dialog.show();
+
+    }
+
+    private void clickListeners(View view) {
+
+        view.findViewById(R.id.rl1).setOnClickListener(this);
+        view.findViewById(R.id.rl2).setOnClickListener(this);
+        view.findViewById(R.id.rl3).setOnClickListener(this);
+        view.findViewById(R.id.rl4).setOnClickListener(this);
+        view.findViewById(R.id.rl5).setOnClickListener(this);
+        view.findViewById(R.id.rl6).setOnClickListener(this);
+        view.findViewById(R.id.rl7).setOnClickListener(this);
+        view.findViewById(R.id.rl8).setOnClickListener(this);
+        view.findViewById(R.id.rl9).setOnClickListener(this);
+        view.findViewById(R.id.rl10).setOnClickListener(this);
+        view.findViewById(R.id.rl11).setOnClickListener(this);
+        view.findViewById(R.id.rl12).setOnClickListener(this);
+        view.findViewById(R.id.rl13).setOnClickListener(this);
+        view.findViewById(R.id.rl14).setOnClickListener(this);
+        view.findViewById(R.id.rl15).setOnClickListener(this);
+        view.findViewById(R.id.rl16).setOnClickListener(this);
+        view.findViewById(R.id.rl17).setOnClickListener(this);
+        view.findViewById(R.id.rl18).setOnClickListener(this);
+        view.findViewById(R.id.rl19).setOnClickListener(this);
+        view.findViewById(R.id.rl20).setOnClickListener(this);
+        view.findViewById(R.id.rl21).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        intItemContainer = (CardView) view;
+        intItem = (TextView) view.findViewById(dataSet.list.get(view.getId()));
+        onSelect();
+    }
+
+    private void onSelect() {
+
+        if (intItem.getCurrentTextColor() == Color.parseColor("#454545")) {
+            intItem.setTextColor(Color.WHITE);
+            intItemContainer.setCardBackgroundColor(Color.RED);
+            categoryId = Integer.parseInt(getResources().getResourceEntryName(intItem.getId()).substring(1));
+            category = intItem.getText().toString() + " ";
+
+            Spannable spannable = new SpannableString("in  " + category);
+            int start = 4;
+            int end = start + category.length();
+
+            spannable.setSpan(new RoundedBackgroundSpan(8, Color.parseColor("#0570C0"), Color.parseColor("#FFFFFF"), 8), start, end,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    showFilters(false);
+                }
+            }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textCat.setText(spannable);
+        }
+
+        dialog.dismiss();
     }
 }

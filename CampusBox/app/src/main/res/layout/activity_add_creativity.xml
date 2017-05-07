@@ -6,13 +6,58 @@
     android:layout_height="match_parent"
     tools:context="in.exun.campusbox.activity.AddCreativity">
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/container_action"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:alpha="0.7"
+                android:padding="16dp"
+                app:srcCompat="@drawable/ic_close" />
+
+            <TextView
+                android:id="@+id/text_category"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@id/btn_close"
+                android:fontFamily="sarif-thin"
+                android:gravity="center"
+                android:text="in "
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/btn_publish"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="sarif"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="Publish"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
     <HorizontalScrollView
         android:id="@+id/container_tools"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,13 +155,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/container_tools"
+        android:layout_below="@id/container_action"
         android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <io.github.mthli.knife.KnifeText
+            <EditText
                 android:id="@+id/input_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,31 +170,32 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="sarif"
                 android:hint="Title"
-                android:padding="16dp"
                 android:inputType="textCapSentences"
+                android:padding="16dp"
                 android:textSize="32sp"
                 android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/btn_add_cover"
-                android:layout_below="@id/input_title"
-                android:drawableStart="@drawable/ic_add_photo_small"
-                android:text="Add cover photo"
-                android:padding="8dp"
-                android:textSize="14sp"
-                android:textColor="#8e8e8e"
-                android:drawablePadding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/input_title"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_add_photo_small"
+                android:imeOptions="actionNext"
+                android:padding="8dp"
+                android:text="Add cover photo"
+                android:textColor="#8e8e8e"
+                android:textSize="14sp"
                 android:textStyle="italic" />
 
             <ImageView
                 android:id="@+id/img_cover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
+                android:layout_below="@id/btn_add_cover"
                 android:adjustViewBounds="true"
-                android:layout_below="@id/btn_add_cover" />
+                android:scaleType="centerCrop" />
 
             <io.github.mthli.knife.KnifeText
                 android:id="@+id/input_post"
@@ -160,7 +207,8 @@
                 android:fontFamily="sarif"
                 android:gravity="top|start"
                 android:hint="Tell your story.."
-                android:inputType="textCapSentences"
+                android:imeOptions="actionNone"
+                android:inputType="textCapSentences|textMultiLine"
                 android:minHeight="200dp"
                 android:padding="16dp"
                 android:scrollbars="vertical"
@@ -180,7 +228,7 @@
                 android:id="@+id/rv_extra"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/input_post"/>
+                android:layout_below="@id/input_post" />
 
         </RelativeLayout>
 

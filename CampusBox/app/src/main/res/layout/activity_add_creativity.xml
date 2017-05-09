@@ -38,13 +38,16 @@
             <TextView
                 android:id="@+id/btn_publish"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:background="@drawable/background_primary"
                 android:fontFamily="sarif"
                 android:gravity="center"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:text="Publish"
-                android:textColor="@color/colorPrimary"
+                android:textColor="#fff"
                 android:textSize="18sp" />
 
         </RelativeLayout>
@@ -170,7 +173,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="sarif"
                 android:hint="Title"
-                android:inputType="textCapSentences"
+                android:inputType="textCapSentences|textMultiLine"
                 android:padding="16dp"
                 android:textSize="32sp"
                 android:textStyle="italic" />

@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -25,9 +26,12 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -48,6 +52,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +65,6 @@ import in.exun.campusbox.helper.AppConstants;
 import in.exun.campusbox.helper.AppController;
 import in.exun.campusbox.helper.BitmapUtils;
 import in.exun.campusbox.helper.DataSet;
-import in.exun.campusbox.helper.RoundedBackgroundSpan;
 import in.exun.campusbox.helper.SessionManager;
 import in.exun.campusbox.model.CreativityItems;
 import io.github.mthli.knife.KnifeText;
@@ -366,6 +370,8 @@ public class AddCreativity extends AppCompatActivity implements View.OnClickList
             public void onClick(DialogInterface dialog, int which) {
                 String link = editText.getText().toString().trim();
                 if (TextUtils.isEmpty(link)) {
+                    return;
+                } else if (URLUtil.isValidUrl(link)){
                     return;
                 }
 
@@ -677,17 +683,50 @@ public class AddCreativity extends AppCompatActivity implements View.OnClickList
             obj.put("type", categoryId);
             object = new JSONObject();
             object.put("mediaType", "text");
-            object.put("text",inputPost.toHtml());
-            if (imgCover != null)
-            for (int i = 0; i<items.size();i++){
-                object = new JSONObject();
-
+            object.put("text", inputPost.toHtml());
+            arr.put(object);
+            if (imgCover.getDrawable() != null) {
+                object.put("mediaType", "cover");
+                object.put("image", getEncodedImage(((BitmapDrawable)imgCover.getDrawable()).getBitmap()));
                 arr.put(object);
             }
+            for (int i = 0; i < items.size(); i++) {
+                object = new JSONObject();
+                CreativityItems item = items.get(i);
+                switch (item.getType()){
+                    case TYPE_IMAGE:
+                        object.put("mediaType", "image");
+                        object.put("image", getEncodedImage(item.getBitmap()));
+                        break;
+                    case TYPE_YOUTUBE:
+                        object.put("mediaType", "soundcloud");
+                        object.put("embedUrlIframe", new JSONArray());
+                        object.put("embedUrl", item.getData());
+                        object.put("embedUrl1", "//w.soundcloud.com/player/?url=" + item.getData());
+                        break;
+                    case TYPE_SOUND:
+                        object.put("mediaType", "text");
+
+                        break;
+                    case TYPE_VIMEO:
+                        object.put("mediaType", "text");
+
+                        break;
+                }
+                arr.put(object);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return obj;
+    }
+
+    private String getEncodedImage(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
+        byte[] b = baos.toByteArray();
+        return "data:image/png;base64," + Base64.encodeToString(b, Base64.URL_SAFE);
     }
 
     public void showFilters(boolean firstTime) {
@@ -756,21 +795,22 @@ public class AddCreativity extends AppCompatActivity implements View.OnClickList
             intItem.setTextColor(Color.WHITE);
             intItemContainer.setCardBackgroundColor(Color.RED);
             categoryId = Integer.parseInt(getResources().getResourceEntryName(intItem.getId()).substring(1));
-            category = intItem.getText().toString() + " ";
+            category = intItem.getText().toString();
 
-            Spannable spannable = new SpannableString("in  " + category);
-            int start = 4;
+            Spannable spannable = new SpannableString("in " + category);
+            int start = 3;
             int end = start + category.length();
 
-            spannable.setSpan(new RoundedBackgroundSpan(8, Color.parseColor("#0570C0"), Color.parseColor("#FFFFFF"), 8), start, end,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannable.setSpan(new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
                     showFilters(false);
                 }
             }, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannable.setSpan(new ForegroundColorSpan(Color.parseColor("#0570C0")), start, end,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             textCat.setText(spannable);
+            textCat.setHighlightColor(Color.TRANSPARENT);
         }
 
         dialog.dismiss();

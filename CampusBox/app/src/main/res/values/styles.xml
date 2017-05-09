@@ -17,14 +17,9 @@
  <style name="MyTextView" parent="@android:style/Widget.TextView">
      <item name="android:background">@color/textbackgroundcolor</item>
  </style>
-    <!-- Button Design -->
-    <style name="MyButton" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@android:color/darker_gray</item>
-        <item name="colorButtonNormal">@color/mainColor</item>
-    </style>
 
     <style name="fab_labels_style">
-        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:background">@drawable/background_fab_label</item>
         <item name="android:textColor">#fff</item>
     </style>
 

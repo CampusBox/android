@@ -156,7 +156,7 @@ public class RVACreative extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .placeholder(R.drawable.ic_account_placeholder)
                     .error(R.drawable.ic_account_placeholder)
                     .into(holder.imgAuthor);
-            holder.textTitle.setText(mCreativeJsonHandler.getTitle(counter));
+            holder.textTitle.setText(Html.fromHtml(mCreativeJsonHandler.getTitle(counter)));
             holder.textDesc.setText(Html.fromHtml(mCreativeJsonHandler.getDesc(counter)));
             if (mCreativeJsonHandler.isAppreciated(counter)) {
                 holder.btnLike.setText("Appreciated | " + mCreativeJsonHandler.getAppreciatedCount(counter));

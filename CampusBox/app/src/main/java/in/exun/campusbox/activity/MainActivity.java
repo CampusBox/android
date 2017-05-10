@@ -9,7 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import in.exun.campusbox.R;
 import in.exun.campusbox.fragments.Main.Creativity;
@@ -89,23 +91,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (index) {
                 case 0:
                     fragment = new Home();
-                    setSelectedNav((LinearLayout) findViewById(R.id.nav_home));
+                    setSelectedNav(index);
                     break;
                 case 1:
                     fragment = new Events();
-                    setSelectedNav((LinearLayout) findViewById(R.id.nav_event));
+                    setSelectedNav(index);
                     break;
                 case 2:
                     fragment = new Search();
-                    setSelectedNav((LinearLayout) findViewById(R.id.nav_search));
+                    setSelectedNav(index);
                     break;
                 case 3:
                     fragment = new Creativity();
-                    setSelectedNav((LinearLayout) findViewById(R.id.nav_creativity));
+                    setSelectedNav(index);
                     break;
                 case 4:
                     fragment = new Profile();
-                    setSelectedNav((LinearLayout) findViewById(R.id.nav_me));
+                    setSelectedNav(index);
                     break;
             }
 
@@ -163,21 +165,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void setSelectedNav(View selectedNav) {
+    private void setSelectedNav(int index) {
 
         switch (currIndex) {
             case 0:
-                ((LinearLayout) findViewById(R.id.nav_home)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((TextView) findViewById(R.id.text_home)).setTextColor(Color.parseColor("#1F8ADA"));
+                ((ImageView) findViewById(R.id.img_home)).setColorFilter(Color.parseColor("#1F8ADA"));
+                break;
             case 1:
-                ((LinearLayout) findViewById(R.id.nav_event)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((TextView) findViewById(R.id.text_event)).setTextColor(Color.parseColor("#1F8ADA"));
+                ((ImageView) findViewById(R.id.img_event)).setColorFilter(Color.parseColor("#1F8ADA"));
+                break;
             case 2:
-                ((LinearLayout) findViewById(R.id.nav_search)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((TextView) findViewById(R.id.text_search)).setTextColor(Color.parseColor("#1F8ADA"));
+                ((ImageView) findViewById(R.id.img_search)).setColorFilter(Color.parseColor("#1F8ADA"));
+                break;
             case 3:
-                ((LinearLayout) findViewById(R.id.nav_creativity)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((TextView) findViewById(R.id.text_creative)).setTextColor(Color.parseColor("#1F8ADA"));
+                ((ImageView) findViewById(R.id.img_creative)).setColorFilter(Color.parseColor("#1F8ADA"));
+                break;
             case 4:
-                ((LinearLayout) findViewById(R.id.nav_me)).setBackgroundColor(Color.parseColor("#0570C0"));
+                ((TextView) findViewById(R.id.text_me)).setTextColor(Color.parseColor("#1F8ADA"));
+                ((ImageView) findViewById(R.id.img_me)).setColorFilter(Color.parseColor("#1F8ADA"));
+                break;
         }
 
-        selectedNav.setBackgroundColor(Color.parseColor("#06558F"));
+        switch (index) {
+            case 0:
+                ((TextView) findViewById(R.id.text_home)).setTextColor(Color.parseColor("#06558F"));
+                ((ImageView) findViewById(R.id.img_home)).setColorFilter(Color.parseColor("#06558F"));
+                break;
+            case 1:
+                ((TextView) findViewById(R.id.text_event)).setTextColor(Color.parseColor("#06558F"));
+                ((ImageView) findViewById(R.id.img_event)).setColorFilter(Color.parseColor("#06558F"));
+                break;
+            case 2:
+                ((TextView) findViewById(R.id.text_search)).setTextColor(Color.parseColor("#06558F"));
+                ((ImageView) findViewById(R.id.img_search)).setColorFilter(Color.parseColor("#06558F"));
+                break;
+            case 3:
+                ((TextView) findViewById(R.id.text_creative)).setTextColor(Color.parseColor("#06558F"));
+                ((ImageView) findViewById(R.id.img_creative)).setColorFilter(Color.parseColor("#06558F"));
+                break;
+            case 4:
+                ((TextView) findViewById(R.id.text_me)).setTextColor(Color.parseColor("#06558F"));
+                ((ImageView) findViewById(R.id.img_me)).setColorFilter(Color.parseColor("#06558F"));
+                break;
+        }
     }
 }

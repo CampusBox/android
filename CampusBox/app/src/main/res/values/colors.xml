@@ -2,10 +2,10 @@
 <resources>
     <color name="colorPrimary">#0570C0</color>
     <color name="colorPrimaryDark">#06558F</color>
+    <color name="colorPrimaryLight">#1F8ADA</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="mainColor">#056FBF</color>
+    <color name="colorGrey">#ececec</color>
     <color name="buttonText">#454545</color>
-    <color name="imageBackgroundEvent">#ececec</color>
     <color name="buttonBackground">#ececec</color>
 
     <color name="black_semi_transparent">#B2000000</color>

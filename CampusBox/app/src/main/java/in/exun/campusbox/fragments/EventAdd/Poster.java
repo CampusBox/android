@@ -98,7 +98,7 @@ public class Poster extends Fragment implements BlockingStep {
             });
 
         }
-        imgPoster.setMinZoom(0.8f);
+        imgPoster.setMinZoom(0.5f);
 
         mBitmap = Bitmap.createScaledBitmap(mBitmap, (int) (mBitmap.getWidth() / scale1280),
                 (int) (mBitmap.getHeight() / scale1280), true);
@@ -200,7 +200,6 @@ public class Poster extends Fragment implements BlockingStep {
 
                 if (bitmap != null) {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos); //bm is the bitmap object
                     byte[] b = baos.toByteArray();
                     ((AddEvent) getActivity()).stringImage = "data:image/png;base64," + Base64.encodeToString(b, Base64.URL_SAFE);
 

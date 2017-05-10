@@ -159,7 +159,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         holder.textLike.setText("Appreciated");
                         mEventJsonHandler.setAppreciated(counter, true);
                     }
-                    myClickListener.onItemClick(holder.getAdapterPosition(), view, 1);
+                    myClickListener.onItemClick(counter, view, 1);
                 }
             });
 
@@ -188,7 +188,7 @@ public class RVAEvents extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
 
-            if (mEventJsonHandler.isAttending(holder.getAdapterPosition())) {
+            if (mEventJsonHandler.isAttending(counter)) {
                 holder.optAttending.setVisibility(View.VISIBLE);
                 holder.optRSVP.setVisibility(View.GONE);
             } else {

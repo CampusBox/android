@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initialise() {
 
         session = new SessionManager(getApplicationContext());
-        displayView(3, false);
+        displayView(1, false);
     }
 
     private void setupBottomNav() {

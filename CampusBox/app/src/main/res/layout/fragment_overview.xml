@@ -9,11 +9,7 @@
 
 
 
-        <LinearLayout
 
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
           <android.support.v7.widget.CardView
               android:id="@+id/details"
               android:layout_marginTop="8dp"
@@ -24,10 +20,7 @@
               android:layout_height="wrap_content">
               <LinearLayout
 
-                  android:layout_marginTop="16dp"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginBottom="16dp"
-                  android:layout_marginEnd="16dp"
+                  android:layout_margin="16dp"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal">
@@ -70,6 +63,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 app:cardElevation="3dp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -96,6 +90,7 @@
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content" />
                      <ImageView
+                         android:id="@+id/about_text_edit"
                          android:layout_weight="0.3"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
@@ -104,11 +99,14 @@
 
                  </LinearLayout>
 
-                    <TextView
+                    <EditText
+                        android:background="@android:color/transparent"
                         android:id="@+id/about_text"
+                        android:inputType="textMultiLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:textIsSelectable="true"
                         tools:text="Apparently, this user prefers to keep an air of mystery about them" />
 
                 </LinearLayout>
@@ -149,7 +147,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <ImageView
+                            android:id="@+id/edit_skill"
                             android:layout_weight="0.3"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_pencil_grey600_18dp"
@@ -228,7 +228,3 @@
         </LinearLayout>
 
 
-
-
-
-</LinearLayout>

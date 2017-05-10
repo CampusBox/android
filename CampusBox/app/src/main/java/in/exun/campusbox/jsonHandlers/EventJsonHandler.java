@@ -211,6 +211,81 @@ public class EventJsonHandler {
         }
 
     }
+    public String getCost(int position)
+    {
+        try {
+
+            JSONObject jsonObject1 = data.getJSONObject(position);
+            jsonObject1 = jsonObject1.getJSONObject("details");
+            String str= jsonObject1.getString("price");
+            if(str.equals("0"))
+            return "Free";
+            else return str;
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    public String getAuthorName(int position)
+    {
+        try {
+
+            JSONObject jsonObject1 = data.getJSONObject(position);
+            jsonObject1 = jsonObject1.getJSONObject("organiser");
+            return jsonObject1.getString("name");
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+    public String getAuthorLink(int position)
+    {
+        try {
+
+            JSONObject jsonObject1 = data.getJSONObject(position);
+            jsonObject1 = jsonObject1.getJSONObject("organiser");
+            return jsonObject1.getString("link");
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+    public String getTag(int position)
+    {
+        Log.e(TAG, "getTag: "+"I am here" );
+        try {
+
+            JSONObject jsonObject1 = data.getJSONObject(position);
+            jsonObject1 = jsonObject1.getJSONObject("Tags");
+            JSONArray jsonArray=jsonObject1.getJSONArray("data");
+            String str="";
+            for(int i =0;i<jsonArray.length();i++)
+                str=str+" "+(new JSONObject(jsonArray.getString(i))).getString("name");
+
+            Log.e(TAG, "getTag: "+str );
+           return str;
+
+
+        } catch (Exception e) {
+            Log.e(TAG, "getTag: "+e.toString() );
+            return null;
+        }
+    }
+    public String getDescription(int position)
+    {try {
+
+        JSONObject jsonObject1 = data.getJSONObject(position);
+        jsonObject1 = jsonObject1.getJSONObject("details");
+        return jsonObject1.getString("description");
+    } catch (Exception e) {
+        return null;
+    }
+
+    }
 
     public int getLimit() {
         return limit;
